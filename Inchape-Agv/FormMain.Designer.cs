@@ -41,9 +41,6 @@
             btn_task = new FontAwesome.Sharp.IconButton();
             btn_home = new FontAwesome.Sharp.IconButton();
             pnl_btnMainMenu = new Panel();
-            pnl_btnStock = new Panel();
-            btn_stockEmpty = new FontAwesome.Sharp.IconButton();
-            btn_stockFg = new FontAwesome.Sharp.IconButton();
             pnl_content = new Panel();
             cS_DragControl1 = new CS_DragControl();
             cS_DragControl2 = new CS_DragControl();
@@ -56,7 +53,6 @@
             ((System.ComponentModel.ISupportInitialize)img_header).BeginInit();
             panel2.SuspendLayout();
             pnl_btnMainMenu.SuspendLayout();
-            pnl_btnStock.SuspendLayout();
             SuspendLayout();
             // 
             // btn_close
@@ -112,6 +108,7 @@
             btn_minimize.Size = new Size(42, 42);
             btn_minimize.TabIndex = 3;
             btn_minimize.UseVisualStyleBackColor = true;
+            btn_minimize.Click += btn_minimize_Click;
             // 
             // pnl_header
             // 
@@ -122,7 +119,7 @@
             pnl_header.Dock = DockStyle.Top;
             pnl_header.Location = new Point(0, 0);
             pnl_header.Name = "pnl_header";
-            pnl_header.Size = new Size(950, 42);
+            pnl_header.Size = new Size(1024, 42);
             pnl_header.TabIndex = 0;
             // 
             // title_header
@@ -155,7 +152,7 @@
             panel2.Controls.Add(btn_maximize);
             panel2.Controls.Add(btn_close);
             panel2.Dock = DockStyle.Right;
-            panel2.Location = new Point(821, 0);
+            panel2.Location = new Point(895, 0);
             panel2.Name = "panel2";
             panel2.Size = new Size(129, 42);
             panel2.TabIndex = 0;
@@ -173,7 +170,7 @@
             btn_config.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btn_config.IconSize = 32;
             btn_config.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_config.Location = new Point(0, 237);
+            btn_config.Location = new Point(0, 156);
             btn_config.Name = "btn_config";
             btn_config.Padding = new Padding(5, 0, 0, 0);
             btn_config.Size = new Size(144, 52);
@@ -256,7 +253,6 @@
             // 
             pnl_btnMainMenu.BackColor = Color.FromArgb(52, 128, 250);
             pnl_btnMainMenu.Controls.Add(btn_config);
-            pnl_btnMainMenu.Controls.Add(pnl_btnStock);
             pnl_btnMainMenu.Controls.Add(btn_stock);
             pnl_btnMainMenu.Controls.Add(btn_task);
             pnl_btnMainMenu.Controls.Add(btn_home);
@@ -266,70 +262,12 @@
             pnl_btnMainMenu.Size = new Size(144, 498);
             pnl_btnMainMenu.TabIndex = 1;
             // 
-            // pnl_btnStock
-            // 
-            pnl_btnStock.BackColor = Color.FromArgb(52, 128, 250);
-            pnl_btnStock.Controls.Add(btn_stockEmpty);
-            pnl_btnStock.Controls.Add(btn_stockFg);
-            pnl_btnStock.Dock = DockStyle.Top;
-            pnl_btnStock.Location = new Point(0, 156);
-            pnl_btnStock.Name = "pnl_btnStock";
-            pnl_btnStock.Size = new Size(144, 81);
-            pnl_btnStock.TabIndex = 5;
-            pnl_btnStock.Visible = false;
-            // 
-            // btn_stockEmpty
-            // 
-            btn_stockEmpty.Cursor = Cursors.Hand;
-            btn_stockEmpty.Dock = DockStyle.Top;
-            btn_stockEmpty.FlatAppearance.BorderSize = 0;
-            btn_stockEmpty.FlatAppearance.MouseOverBackColor = Color.FromArgb(73, 193, 255);
-            btn_stockEmpty.FlatStyle = FlatStyle.Flat;
-            btn_stockEmpty.Font = new Font("Consolas", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_stockEmpty.IconChar = FontAwesome.Sharp.IconChar.CartShopping;
-            btn_stockEmpty.IconColor = Color.Black;
-            btn_stockEmpty.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btn_stockEmpty.IconSize = 32;
-            btn_stockEmpty.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_stockEmpty.Location = new Point(0, 42);
-            btn_stockEmpty.Name = "btn_stockEmpty";
-            btn_stockEmpty.Padding = new Padding(30, 0, 0, 0);
-            btn_stockEmpty.Size = new Size(144, 42);
-            btn_stockEmpty.TabIndex = 7;
-            btn_stockEmpty.Text = "Empty";
-            btn_stockEmpty.TextAlign = ContentAlignment.MiddleRight;
-            btn_stockEmpty.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btn_stockEmpty.UseVisualStyleBackColor = true;
-            // 
-            // btn_stockFg
-            // 
-            btn_stockFg.Cursor = Cursors.Hand;
-            btn_stockFg.Dock = DockStyle.Top;
-            btn_stockFg.FlatAppearance.BorderSize = 0;
-            btn_stockFg.FlatAppearance.MouseOverBackColor = Color.FromArgb(73, 193, 255);
-            btn_stockFg.FlatStyle = FlatStyle.Flat;
-            btn_stockFg.Font = new Font("Consolas", 15F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_stockFg.IconChar = FontAwesome.Sharp.IconChar.ThumbsUp;
-            btn_stockFg.IconColor = Color.Black;
-            btn_stockFg.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btn_stockFg.IconSize = 32;
-            btn_stockFg.ImageAlign = ContentAlignment.MiddleLeft;
-            btn_stockFg.Location = new Point(0, 0);
-            btn_stockFg.Name = "btn_stockFg";
-            btn_stockFg.Padding = new Padding(30, 0, 0, 0);
-            btn_stockFg.Size = new Size(144, 42);
-            btn_stockFg.TabIndex = 6;
-            btn_stockFg.Text = "FG";
-            btn_stockFg.TextAlign = ContentAlignment.MiddleRight;
-            btn_stockFg.TextImageRelation = TextImageRelation.ImageBeforeText;
-            btn_stockFg.UseVisualStyleBackColor = true;
-            // 
             // pnl_content
             // 
             pnl_content.Dock = DockStyle.Fill;
             pnl_content.Location = new Point(144, 42);
             pnl_content.Name = "pnl_content";
-            pnl_content.Size = new Size(806, 498);
+            pnl_content.Size = new Size(880, 498);
             pnl_content.TabIndex = 2;
             // 
             // cS_DragControl1
@@ -352,7 +290,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(950, 540);
+            ClientSize = new Size(1024, 540);
             Controls.Add(pnl_content);
             Controls.Add(pnl_btnMainMenu);
             Controls.Add(pnl_header);
@@ -366,7 +304,6 @@
             ((System.ComponentModel.ISupportInitialize)img_header).EndInit();
             panel2.ResumeLayout(false);
             pnl_btnMainMenu.ResumeLayout(false);
-            pnl_btnStock.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -387,8 +324,5 @@
         private CS_DragControl cS_DragControl2;
         private CS_DragControl cS_DragControl3;
         private CS_DragControl cS_DragControl4;
-        private Panel pnl_btnStock;
-        private FontAwesome.Sharp.IconButton btn_stockFg;
-        private FontAwesome.Sharp.IconButton btn_stockEmpty;
     }
 }

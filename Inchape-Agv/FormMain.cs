@@ -21,14 +21,11 @@ namespace Inchape_Agv
             btn_task.Tag = new V_Tasks();
             btn_stock.Tag = new V_Stocks();
             btn_config.Tag = new V_Settings();
-            //btn_stockFg.Tag = new V_Stocks();
 
             btn_home.Click += MenuButton_Click;
             btn_task.Click += MenuButton_Click;
             btn_stock.Click += MenuButton_Click;
             btn_config.Click += MenuButton_Click;
-            //btn_stockFg.Click += MenuButton_Click;
-            btn_stockEmpty.Click += MenuButton_Click;
         }
 
         private void FormMain_Load(object sender, EventArgs e)
@@ -56,6 +53,11 @@ namespace Inchape_Agv
                 this.WindowState = FormWindowState.Maximized;
         }
 
+        private void btn_minimize_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
         private void MenuButton_Click(object? sender, EventArgs e)
         {
             if (sender is IconButton btn)
@@ -65,14 +67,6 @@ namespace Inchape_Agv
                     _navigate.OpenUserControl(instance);
                 }
 
-
-                //if (string.Equals(btn.Name, "btn_stock", StringComparison.OrdinalIgnoreCase)) {
-                //    if (!pnl_btnStock.Visible)
-                //        pnl_btnStock.Visible = true;
-                //    else
-                //        pnl_btnStock.Visible = false;
-                //}
-                    
             }
         }
     }

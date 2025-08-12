@@ -1,0 +1,6 @@
+{
+  "port": "COM4",
+  "baudrate": 19200,
+  "wireless_address": 0,
+  "server_port":  5000
+}

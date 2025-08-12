@@ -32,6 +32,8 @@
             tb_prodNo = new TextBox();
             btn_send = new FontAwesome.Sharp.IconButton();
             btn_clearProdNo = new FontAwesome.Sharp.IconButton();
+            dataGridView1 = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -85,16 +87,27 @@
             btn_clearProdNo.Text = "CLEAR Prod No";
             btn_clearProdNo.UseVisualStyleBackColor = true;
             // 
+            // dataGridView1
+            // 
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(10, 152);
+            dataGridView1.Margin = new Padding(10);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.Size = new Size(799, 336);
+            dataGridView1.TabIndex = 4;
+            // 
             // V_Home
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(dataGridView1);
             Controls.Add(btn_clearProdNo);
             Controls.Add(btn_send);
             Controls.Add(tb_prodNo);
             Controls.Add(label1);
             Name = "V_Home";
             Size = new Size(821, 498);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -105,5 +118,6 @@
         private TextBox tb_prodNo;
         private FontAwesome.Sharp.IconButton btn_send;
         private FontAwesome.Sharp.IconButton btn_clearProdNo;
+        private DataGridView dataGridView1;
     }
 }

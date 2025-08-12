@@ -41,7 +41,12 @@ namespace Inchape_Agv.DbServices.Fuctions
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"UPDATE {_db} SET ");
-            sqlString.Append("name= @Name, route= @Route, markId= MarkId, endMarkId= @EndMarkId, typeStock= @TypeStock, type= @Type ");
+            sqlString.Append("name= @Name, " +
+                "route= @Route, " +
+                "markId= @MarkId, " +
+                "endMarkId= @EndMarkId, " +
+                "typeStock= @TypeStock, " +
+                "type= @Type " );
             sqlString.Append("WHERE id= @Id");
 
             SQLiteParameter[] parameter =

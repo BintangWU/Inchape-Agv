@@ -23,6 +23,19 @@ namespace Inchape_Agv.Views
             btn_update.Click += Button_Click;
             btn_import.Click += Button_Click;
             btn_export.Click += Button_Click;
+
+            tb_route.KeyPress += NumericTextBox_KeyPress;
+            tb_markId.KeyPress += NumericTextBox_KeyPress;
+            tb_endMarkId.KeyPress += NumericTextBox_KeyPress;
+        }
+
+
+        private void NumericTextBox_KeyPress(object? sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                e.Handled = true;
+            }
         }
 
         private void Button_Click(object? sender, EventArgs e)
@@ -35,7 +48,17 @@ namespace Inchape_Agv.Views
                     switch (action)
                     {
                         case "add":
-                            DataUpdate();
+                            bool flag1 = cbo_typeStock.SelectedItem != null;
+                            bool flag2 = cbo_type.SelectedItem != null;
+
+                            if (flag1 && flag2)
+                                DataUpdate();
+                            else
+                            {
+                                string message = (!flag1 ? "Please select a TypeStock.\n" : "") + (!flag2 ? "Please select a Type." : "");
+                                if (!string.IsNullOrEmpty(message))
+                                    MessageBox.Show(message);
+                            }
                             break;
 
                         case "update":
@@ -87,9 +110,9 @@ namespace Inchape_Agv.Views
                 DBM_Stock data = new DBM_Stock
                 {
                     Name = tb_name.Text.ToString(),
-                    Route = string.IsNullOrWhiteSpace(tb_route.Text.ToString()) ? Convert.ToInt16(tb_route.Text.ToString()) : 0,
-                    MarkId = string.IsNullOrWhiteSpace(tb_markId.Text.ToString()) ? Convert.ToInt16(tb_route.Text.ToString()) : 0,
-                    EndMarkId = string.IsNullOrWhiteSpace(tb_endMarkId.Text.ToString()) ? Convert.ToInt16(tb_route.Text.ToString()) : 0,
+                    Route = int.TryParse(tb_route.Text, out var route) ? route : 0,
+                    MarkId = int.TryParse(tb_markId.Text, out var markId) ? markId : 0,
+                    EndMarkId = int.TryParse(tb_endMarkId.Text, out var endMarkId) ? endMarkId : 0,
                     TypeStock = cbo_typeStock.Text.ToString(),
                     Type = cbo_type.Text.ToString()
                 };
@@ -103,7 +126,6 @@ namespace Inchape_Agv.Views
                 }
                 else
                 {
-                    Debug.WriteLine(flag);
                     results = DbServices.DbServices.Instance.DB_Stock.Add(data) > 0;
                 }
 
@@ -115,6 +137,9 @@ namespace Inchape_Agv.Views
                     tb_endMarkId.Clear();
                     cbo_typeStock.Text = "";
                     cbo_type.Text = "";
+
+                    cbo_typeStock.SelectedIndex = -1;
+                    cbo_type.SelectedIndex = -1;    
 
                     dtg_stocks.DataSource = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
                     dtg_stocks.Refresh();
