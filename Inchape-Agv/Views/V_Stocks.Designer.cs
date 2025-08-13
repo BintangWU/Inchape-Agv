@@ -36,16 +36,6 @@
             label5 = new Label();
             label6 = new Label();
             dtg_stocks = new DataGridView();
-            btn_add = new FontAwesome.Sharp.IconButton();
-            tb_name = new TextBox();
-            tb_route = new TextBox();
-            tb_endMarkId = new TextBox();
-            tb_markId = new TextBox();
-            cbo_type = new ComboBox();
-            btn_update = new FontAwesome.Sharp.IconButton();
-            label3 = new Label();
-            cbo_typeStock = new ComboBox();
-            btn_import = new FontAwesome.Sharp.IconButton();
             id = new DataGridViewTextBoxColumn();
             name = new DataGridViewTextBoxColumn();
             route = new DataGridViewTextBoxColumn();
@@ -56,6 +46,16 @@
             prodNo = new DataGridViewTextBoxColumn();
             status = new DataGridViewTextBoxColumn();
             delete = new DataGridViewLinkColumn();
+            btn_add = new FontAwesome.Sharp.IconButton();
+            tb_name = new TextBox();
+            tb_route = new TextBox();
+            tb_endMarkId = new TextBox();
+            tb_markId = new TextBox();
+            cbo_type = new ComboBox();
+            btn_update = new FontAwesome.Sharp.IconButton();
+            label3 = new Label();
+            cbo_typeStock = new ComboBox();
+            btn_import = new FontAwesome.Sharp.IconButton();
             linkLabel1 = new LinkLabel();
             btn_export = new FontAwesome.Sharp.IconButton();
             ((System.ComponentModel.ISupportInitialize)dtg_stocks).BeginInit();
@@ -153,6 +153,107 @@
             dtg_stocks.Size = new Size(930, 449);
             dtg_stocks.TabIndex = 20;
             dtg_stocks.CellClick += dtg_stocks_CellClick;
+            // 
+            // id
+            // 
+            id.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            id.DataPropertyName = "id";
+            id.HeaderText = "ID";
+            id.Name = "id";
+            id.ReadOnly = true;
+            id.Resizable = DataGridViewTriState.False;
+            id.Width = 50;
+            // 
+            // name
+            // 
+            name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            name.DataPropertyName = "name";
+            name.HeaderText = "NAME";
+            name.Name = "name";
+            name.ReadOnly = true;
+            // 
+            // route
+            // 
+            route.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            route.DataPropertyName = "route";
+            route.HeaderText = "ROUTE";
+            route.Name = "route";
+            route.ReadOnly = true;
+            route.Resizable = DataGridViewTriState.False;
+            route.Width = 60;
+            // 
+            // markId
+            // 
+            markId.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            markId.DataPropertyName = "markId";
+            markId.HeaderText = "MARK";
+            markId.Name = "markId";
+            markId.ReadOnly = true;
+            markId.Resizable = DataGridViewTriState.False;
+            markId.Width = 60;
+            // 
+            // endMarkId
+            // 
+            endMarkId.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            endMarkId.DataPropertyName = "endMarkId";
+            endMarkId.HeaderText = "END MARK";
+            endMarkId.Name = "endMarkId";
+            endMarkId.ReadOnly = true;
+            endMarkId.Resizable = DataGridViewTriState.False;
+            endMarkId.Width = 60;
+            // 
+            // typeStock
+            // 
+            typeStock.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            typeStock.DataPropertyName = "typeStock";
+            typeStock.HeaderText = "STOCK";
+            typeStock.Name = "typeStock";
+            typeStock.ReadOnly = true;
+            typeStock.Resizable = DataGridViewTriState.False;
+            typeStock.Width = 60;
+            // 
+            // type
+            // 
+            type.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            type.DataPropertyName = "type";
+            type.HeaderText = "TYPE";
+            type.Name = "type";
+            type.ReadOnly = true;
+            type.Resizable = DataGridViewTriState.False;
+            type.Width = 60;
+            // 
+            // prodNo
+            // 
+            prodNo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            prodNo.DataPropertyName = "prodNo";
+            prodNo.HeaderText = "CODE";
+            prodNo.Name = "prodNo";
+            prodNo.ReadOnly = true;
+            prodNo.Resizable = DataGridViewTriState.True;
+            // 
+            // status
+            // 
+            status.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            status.DataPropertyName = "status";
+            status.HeaderText = "STATUS";
+            status.Name = "status";
+            status.ReadOnly = true;
+            status.Resizable = DataGridViewTriState.False;
+            status.Width = 75;
+            // 
+            // delete
+            // 
+            delete.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+            delete.HeaderText = "DELETE";
+            delete.LinkBehavior = LinkBehavior.AlwaysUnderline;
+            delete.Name = "delete";
+            delete.Resizable = DataGridViewTriState.False;
+            delete.SortMode = DataGridViewColumnSortMode.Automatic;
+            delete.Text = "delete";
+            delete.TrackVisitedState = false;
+            delete.UseColumnTextForLinkValue = true;
+            delete.VisitedLinkColor = Color.Blue;
+            delete.Width = 75;
             // 
             // btn_add
             // 
@@ -284,107 +385,6 @@
             btn_import.Text = "IMPORT";
             btn_import.TextImageRelation = TextImageRelation.ImageAboveText;
             btn_import.UseVisualStyleBackColor = true;
-            // 
-            // id
-            // 
-            id.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            id.DataPropertyName = "id";
-            id.HeaderText = "ID";
-            id.Name = "id";
-            id.ReadOnly = true;
-            id.Resizable = DataGridViewTriState.False;
-            id.Width = 50;
-            // 
-            // name
-            // 
-            name.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            name.DataPropertyName = "name";
-            name.HeaderText = "NAME";
-            name.Name = "name";
-            name.ReadOnly = true;
-            // 
-            // route
-            // 
-            route.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            route.DataPropertyName = "route";
-            route.HeaderText = "ROUTE";
-            route.Name = "route";
-            route.ReadOnly = true;
-            route.Resizable = DataGridViewTriState.False;
-            route.Width = 60;
-            // 
-            // markId
-            // 
-            markId.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            markId.DataPropertyName = "markId";
-            markId.HeaderText = "MARK";
-            markId.Name = "markId";
-            markId.ReadOnly = true;
-            markId.Resizable = DataGridViewTriState.False;
-            markId.Width = 60;
-            // 
-            // endMarkId
-            // 
-            endMarkId.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            endMarkId.DataPropertyName = "endMarkId";
-            endMarkId.HeaderText = "END MARK";
-            endMarkId.Name = "endMarkId";
-            endMarkId.ReadOnly = true;
-            endMarkId.Resizable = DataGridViewTriState.False;
-            endMarkId.Width = 60;
-            // 
-            // typeStock
-            // 
-            typeStock.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            typeStock.DataPropertyName = "typeStock";
-            typeStock.HeaderText = "STOCK";
-            typeStock.Name = "typeStock";
-            typeStock.ReadOnly = true;
-            typeStock.Resizable = DataGridViewTriState.False;
-            typeStock.Width = 60;
-            // 
-            // type
-            // 
-            type.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            type.DataPropertyName = "type";
-            type.HeaderText = "TYPE";
-            type.Name = "type";
-            type.ReadOnly = true;
-            type.Resizable = DataGridViewTriState.False;
-            type.Width = 60;
-            // 
-            // prodNo
-            // 
-            prodNo.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-            prodNo.DataPropertyName = "prodNo";
-            prodNo.HeaderText = "CODE";
-            prodNo.Name = "prodNo";
-            prodNo.ReadOnly = true;
-            prodNo.Resizable = DataGridViewTriState.True;
-            // 
-            // status
-            // 
-            status.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            status.DataPropertyName = "status";
-            status.HeaderText = "STATUS";
-            status.Name = "status";
-            status.ReadOnly = true;
-            status.Resizable = DataGridViewTriState.False;
-            status.Width = 75;
-            // 
-            // delete
-            // 
-            delete.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            delete.HeaderText = "DELETE";
-            delete.LinkBehavior = LinkBehavior.AlwaysUnderline;
-            delete.Name = "delete";
-            delete.Resizable = DataGridViewTriState.False;
-            delete.SortMode = DataGridViewColumnSortMode.Automatic;
-            delete.Text = "delete";
-            delete.TrackVisitedState = false;
-            delete.UseColumnTextForLinkValue = true;
-            delete.VisitedLinkColor = Color.Blue;
-            delete.Width = 75;
             // 
             // linkLabel1
             // 

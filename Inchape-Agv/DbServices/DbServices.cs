@@ -14,6 +14,7 @@ namespace Inchape_Agv.DbServices
         private static object _instanceLock = new object();
 
         private DB_Stock? _dbStock;
+        private DB_TaskOrder? _dbTaskOrder;
 
         public static DbServices Instance
         {
@@ -33,8 +34,18 @@ namespace Inchape_Agv.DbServices
             get
             {
                 if (_dbStock == null)
-                    _dbStock = new DB_Stock(); // or inject it somehow
+                    _dbStock = new DB_Stock();
                 return _dbStock;
+            }
+        }
+
+        public DB_TaskOrder DB_TaskOrder
+        {
+            get
+            {
+                if (_dbTaskOrder == null)
+                    _dbTaskOrder = new DB_TaskOrder();
+                return _dbTaskOrder;
             }
         }
     }

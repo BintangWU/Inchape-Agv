@@ -49,7 +49,7 @@ namespace Inchape_Agv.DbServices.Fuctions
                 "type= @Type " );
             sqlString.Append("WHERE id= @Id");
 
-            SQLiteParameter[] parameter =
+            SQLiteParameter[] parameters =
             [
                 new SQLiteParameter("@Id", model.ID),
                 new SQLiteParameter("@Name", model.Name),
@@ -60,16 +60,9 @@ namespace Inchape_Agv.DbServices.Fuctions
                 new SQLiteParameter("@Type", model.Type)
             ];
 
-            int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameter);    
+            int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);    
             return rows > 0;    
         }
-
-        //public bool UpdateProdNo(DBM_Stock model)
-        //{
-        //    StringBuilder sqlString = new StringBuilder();
-        //    sqlString.Append($"UPDATE {_db} SET ");
-        //    sqlString.Append("prodNo= @ProdNo");
-        //}
 
         public bool Delete(int id)
         {
@@ -77,11 +70,11 @@ namespace Inchape_Agv.DbServices.Fuctions
             sqlString.Append($"DELETE FROM {_db} ");
             sqlString.Append("WHERE id= @Id");
 
-            SQLiteParameter[] parameter = [
+            SQLiteParameter[] parameters = [
                 new SQLiteParameter("@Id", Convert.ToString(id))
             ];
 
-            int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameter);
+            int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);
             return rows > 0;
         }
 

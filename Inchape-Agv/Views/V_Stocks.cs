@@ -1,7 +1,7 @@
 ﻿using FontAwesome.Sharp;
 using Inchape_Agv.DbServices.Models;
 using System.Data;
-using System.Diagnostics;
+using Inchape_Agv.Utilities;
 
 namespace Inchape_Agv.Views
 {
@@ -24,18 +24,22 @@ namespace Inchape_Agv.Views
             btn_import.Click += Button_Click;
             btn_export.Click += Button_Click;
 
-            tb_route.KeyPress += NumericTextBox_KeyPress;
-            tb_markId.KeyPress += NumericTextBox_KeyPress;
-            tb_endMarkId.KeyPress += NumericTextBox_KeyPress;
+            tb_route.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
+            tb_markId.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
+            tb_endMarkId.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
         }
 
-
-        private void NumericTextBox_KeyPress(object? sender, KeyPressEventArgs e)
+        private void ClearForm()
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                e.Handled = true;
-            }
+            tb_name.Clear();
+            tb_route.Clear();
+            tb_markId.Clear();
+            tb_endMarkId.Clear();
+
+            cbo_typeStock.Text = "";
+            cbo_typeStock.SelectedIndex = -1;
+            cbo_type.Text = "";
+            cbo_type.SelectedIndex = -1;
         }
 
         private void Button_Click(object? sender, EventArgs e)
@@ -77,7 +81,7 @@ namespace Inchape_Agv.Views
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 
@@ -100,7 +104,7 @@ namespace Inchape_Agv.Views
 
                     }
                 }
-            }  
+            }
         }
 
         private void DataUpdate(int idData = 0)
@@ -131,16 +135,7 @@ namespace Inchape_Agv.Views
 
                 if (results)
                 {
-                    tb_name.Clear();
-                    tb_route.Clear();
-                    tb_markId.Clear();
-                    tb_endMarkId.Clear();
-                    cbo_typeStock.Text = "";
-                    cbo_type.Text = "";
-
-                    cbo_typeStock.SelectedIndex = -1;
-                    cbo_type.SelectedIndex = -1;    
-
+                    ClearForm();
                     dtg_stocks.DataSource = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
                     dtg_stocks.Refresh();
                 }
@@ -168,11 +163,15 @@ namespace Inchape_Agv.Views
                 {
                     int id = idData;
                     DialogResult dialog = MessageBox.Show($"Do you want to delete STOCK:[{id}] [{tb_name.Text}] from database?", "Information", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (dialog == DialogResult.Yes) 
+                    if (dialog == DialogResult.Yes)
                     {
-                        DbServices.DbServices.Instance.DB_Stock.Delete(id);
-                        dtg_stocks.DataSource = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
-                        dtg_stocks.Refresh();
+                        bool flag = DbServices.DbServices.Instance.DB_Stock.Delete(id);
+                        if (flag)
+                        {
+                            ClearForm();
+                            dtg_stocks.DataSource = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
+                            dtg_stocks.Refresh();
+                        }
                     }
                 }
             }
