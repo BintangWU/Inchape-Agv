@@ -25,6 +25,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="LibCommunication">
+      <HintPath>..\LibCommunication.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -42,10 +48,6 @@
   <ItemGroup>
     <Resource Include="Resources\Logo.ico" />
     <Resource Include="Resources\Logo.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="CarServices\" />
   </ItemGroup>
 
   <ItemGroup>

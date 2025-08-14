@@ -3,6 +3,7 @@ using FontAwesome.Sharp;
 using Inchape_Agv.Utilities;
 using Inchape_Agv.Views;
 using System.Diagnostics;
+using CarServices;
 using System.Runtime.InteropServices;
 
 
@@ -37,6 +38,7 @@ namespace Inchape_Agv
             }
 
             //HttpAPI.Instance.StartAPI(8000);
+            CarServices.CarControl.Instance.InitialCommunication();
             _navigate.OpenUserControl(new V_Home());
         }
 

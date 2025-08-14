@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Builder;
 using System.IO.Ports;
 using Inchape_Agv.Utilities;
-using Inchape_Agv.Utilities.SysConfig;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,12 +1,12 @@
 ﻿using System.Text.Json;
 
-namespace Inchape_Agv.Utilities.SysConfig
+namespace Inchape_Agv.Utilities
 {
     public class SysConfigModel
     {
-        public string? ComPort { get; set; } 
+        public string? ComPort { get; set; }
         public int Baudrate { get; set; }
-        public int WirelessAddr { get; set; }    
+        public int WirelessAddr { get; set; }
         public int ServerPort { get; set; }
     }
 
@@ -14,7 +14,7 @@ namespace Inchape_Agv.Utilities.SysConfig
     {
         private static readonly string _configFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "SysConfig");
         private static readonly string _configFile = Path.Combine(_configFolder, "SysConfig.json");
-        
+
         private static void DefaulConfig()
         {
             Directory.CreateDirectory(_configFolder);
@@ -40,7 +40,7 @@ namespace Inchape_Agv.Utilities.SysConfig
         public void Save(SysConfigModel model)
         {
             Directory.CreateDirectory(_configFolder);
-            var options = new JsonSerializerOptions { WriteIndented = true };   
+            var options = new JsonSerializerOptions { WriteIndented = true };
             string json = JsonSerializer.Serialize(model, options);
             File.WriteAllText(_configFile, json);
         }
