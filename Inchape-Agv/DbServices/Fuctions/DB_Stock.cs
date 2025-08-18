@@ -12,12 +12,13 @@ namespace DbServices.Fuctions
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"INSERT INTO {_db} ");
-            sqlString.Append("(name, route, markId, endMarkId, typeStock, type) ");
+            sqlString.Append("(idx, name, route, markId, endMarkId, typeStock, type) ");
             sqlString.Append("VALUES ");
-            sqlString.Append("(@Name, @Route, @MarkId, @EndMarkId, @TypeStock, @Type)");
+            sqlString.Append("(@Index, @Name, @Route, @MarkId, @EndMarkId, @TypeStock, @Type)");
 
             SQLiteParameter[] parameters =
             [
+                new SQLiteParameter("@Index", model.Index),
                 new SQLiteParameter("@Name", model.Name),
                 new SQLiteParameter("@Route", model.Route),
                 new SQLiteParameter("@MarkId", model.MarkId),
@@ -41,7 +42,8 @@ namespace DbServices.Fuctions
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"UPDATE {_db} SET ");
-            sqlString.Append("name= @Name, " +
+            sqlString.Append("idx= @Index, " +
+                "name= @Name, " +
                 "route= @Route, " +
                 "markId= @MarkId, " +
                 "endMarkId= @EndMarkId, " +
@@ -52,6 +54,7 @@ namespace DbServices.Fuctions
             SQLiteParameter[] parameters =
             [
                 new SQLiteParameter("@Id", model.ID),
+                new SQLiteParameter("@Index", model.Index),
                 new SQLiteParameter("@Name", model.Name),
                 new SQLiteParameter("@Route", model.Route),
                 new SQLiteParameter("@MarkId", model.MarkId),
@@ -62,6 +65,23 @@ namespace DbServices.Fuctions
 
             int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);    
             return rows > 0;    
+        }
+
+        public bool Update(string stockName, string prodNo)
+        {
+            StringBuilder sqlString = new StringBuilder();
+            sqlString.Append($"UPDATE {_db} SET ");
+            sqlString.Append("prodNo= @ProdNo ");
+            sqlString.Append("WHERE name= @Name");
+
+            SQLiteParameter[] parameters =
+            [
+                new SQLiteParameter("@Name", stockName),
+                new SQLiteParameter("@ProdNo", prodNo)
+            ];
+
+            int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);
+            return rows > 0;
         }
 
         public bool Delete(int id)

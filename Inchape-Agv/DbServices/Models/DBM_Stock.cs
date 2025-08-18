@@ -10,6 +10,7 @@ namespace DbServices.Models
     public class DBM_Stock
     {
         private int _id;
+        private int _idx;
         private string? _name;
         private int _route;
         private int _markId;
@@ -24,6 +25,12 @@ namespace DbServices.Models
         {
             get { return _id; }
             set { _id = value; }
+        }
+
+        public int Index
+        {
+            get { return _idx; }
+            set { _idx = value; }
         }
         
         public string Name

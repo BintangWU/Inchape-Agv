@@ -1,4 +1,5 @@
 ﻿using DbServices.Models;
+using Inchape_Agv.Views;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace DbServices.Fuctions
 {
@@ -18,12 +20,14 @@ namespace DbServices.Fuctions
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"INSERT INTO {_db} ");
-            sqlString.Append("(prodNo, startTime) ");
-            sqlString.Append("VALUES (@ProdNo, @StartTime) ");
+            sqlString.Append("(prodNo, status, startTime) ");
+            sqlString.Append("VALUES (@ProdNo, @Status, @StartTime) ");
+            //SELECT* from db_stocks WHERE prodNo IS NULL AND typeStock = "FG" AND type IN('LH', 'RH') ORDER BY idx ASC, type ASC LIMIT 2;
 
             SQLiteParameter[] parameters =
             [
                 new SQLiteParameter("@ProdNo", model.ProdNo),
+                new SQLiteParameter("@Status", model.Status),
                 new SQLiteParameter("@StartTime", model.StartTime)
             ];
 
@@ -43,17 +47,13 @@ namespace DbServices.Fuctions
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"UPDATE {_db} SET ");
             sqlString.Append("statusLH= @StatusLH, " +
-                "statusRH= @StatusRH, " +
-                "status= @Status, " +
                 "endTime= @EndTime ");
             sqlString.Append("WHERE prodNo= @ProdNo");
 
             SQLiteParameter[] parameters =
             [
                 new SQLiteParameter("@ProdNo", model.ProdNo),
-                new SQLiteParameter("@status", model.Status),
-                new SQLiteParameter("@statusLH", model.StatusLH),
-                new SQLiteParameter("@statusRH", model.StatusRH)
+                new SQLiteParameter("@status", model.Status)
             ];
 
             int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);
@@ -68,5 +68,7 @@ namespace DbServices.Fuctions
 
             return DbHelper.DataQuery(sqlString.ToString());
         }
+
+        
     }
 }

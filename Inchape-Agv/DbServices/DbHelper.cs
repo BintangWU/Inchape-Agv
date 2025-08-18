@@ -65,6 +65,29 @@ namespace DbServices
             return result;
         }
 
+        //public static void GetSingle(string sqlQuery, SQLiteParameter[] parameters)
+        //{
+        //    using (SQLiteConnection connection = new SQLiteConnection(dbConnectionString)) {
+        //        connection.Open();
+
+        //        using (SQLiteTransaction transaction = connection.BeginTransaction()) 
+        //        { 
+        //            using (SQLiteCommand command = new SQLiteCommand())
+        //            {
+        //                try
+        //                {
+        //                    DbHelper.PrepareCommand(connection, transaction, command, sqlQuery, parameters);
+        //                    object obj = command.ExecuteNonQuery();
+        //                    bool flag = object.Equals(obj, null) || object.Equals (obj, DBNull.Value);  
+        //                }
+        //                catch (SQLiteException ex) { }
+        //            }
+        //            transaction.Commit();
+        //        } 
+        //    }
+        //}
+        
+
         public static int ExecuteSql(string sqlQuery, SQLiteParameter[] parameters)
         {
             int result;

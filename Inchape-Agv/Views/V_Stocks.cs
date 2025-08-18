@@ -37,6 +37,7 @@ namespace Inchape_Agv.Views
             btn_import.Click += Button_Click;
             btn_export.Click += Button_Click;
 
+            tb_index.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
             tb_route.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
             tb_markId.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
             tb_endMarkId.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
@@ -44,6 +45,7 @@ namespace Inchape_Agv.Views
 
         private void ClearForm()
         {
+            tb_index.Clear();
             tb_name.Clear();
             tb_route.Clear();
             tb_markId.Clear();
@@ -172,6 +174,7 @@ namespace Inchape_Agv.Views
             {
                 DBM_Stock data = new DBM_Stock
                 {
+                    Index = int.TryParse(tb_index.Text, out var index) ? index : 0,
                     Name = tb_name.Text.ToString(),
                     Route = int.TryParse(tb_route.Text, out var route) ? route : 0,
                     MarkId = int.TryParse(tb_markId.Text, out var markId) ? markId : 0,
@@ -213,6 +216,7 @@ namespace Inchape_Agv.Views
             try
             {
                 idData = Convert.ToInt32(dtg_stocks.Rows[e.RowIndex].Cells["id"].Value);
+                tb_index.Text = dtg_stocks.Rows[e.RowIndex].Cells["index"].Value.ToString();
                 tb_name.Text = dtg_stocks.Rows[e.RowIndex].Cells["name"].Value.ToString();
                 tb_route.Text = dtg_stocks.Rows[e.RowIndex].Cells["route"].Value.ToString();
                 tb_markId.Text = dtg_stocks.Rows[e.RowIndex].Cells["markId"].Value.ToString();

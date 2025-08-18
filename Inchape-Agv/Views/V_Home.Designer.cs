@@ -69,7 +69,7 @@
             btn_send.Name = "btn_send";
             btn_send.Size = new Size(653, 61);
             btn_send.TabIndex = 2;
-            btn_send.Text = "SEND TO STORAGE";
+            btn_send.Text = "SEND to WAREHOUSE";
             btn_send.UseVisualStyleBackColor = true;
             // 
             // btn_clearProdNo

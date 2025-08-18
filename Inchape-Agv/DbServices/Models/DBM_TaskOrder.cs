@@ -10,8 +10,6 @@ namespace DbServices.Models
     {
         private int _id;
         private string? _prodNo;
-        private string? _statusLH;
-        private string? _statusRH;
         private string? _status;
         private DateTime _startTime;
         private DateTime _endTime;
@@ -26,18 +24,6 @@ namespace DbServices.Models
         {
             get { return _prodNo; }
             set { _prodNo = value; }
-        }
-
-        public string StatusLH
-        {
-            get { return _statusLH; }
-            set { _statusLH = value; }
-        }
-
-        public string StatusRH
-        {
-            get { return _statusRH; }
-            set { _statusRH = value; }
         }
 
         public string Status

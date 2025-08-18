@@ -41,7 +41,19 @@ namespace Inchape_Agv.Utilities
                 {
                     var headers = reader.ReadLine().Split(',');
                     var reverseMap = dataMap.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
-                    var headersMap = headers.Select(h => reverseMap.ContainsKey(h) ? reverseMap[h] : h);
+                    var headersMap = headers.Select(h => reverseMap.ContainsKey(h) ? reverseMap[h] : h).ToList();
+
+                    foreach (var header in headersMap)
+                        data.Columns.Add(header);
+
+                    while (!reader.EndOfStream)
+                    {
+                        var content = reader.ReadLine().Split(',');
+                        DataRow row = data.NewRow();
+                        for (int i = 0; i < headersMap.Count(); i++)
+                            row[headersMap[i]] = content[i];
+                        data.Rows.Add(row);
+                    }
                     return data;
                 }
             }
