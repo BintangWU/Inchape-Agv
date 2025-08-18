@@ -1,4 +1,4 @@
-﻿using Inchape_Agv.DbServices.Models;
+﻿using DbServices.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Inchape_Agv.DbServices.Fuctions
+namespace DbServices.Fuctions
 {
     public class DB_TaskOrder
     {

@@ -1,9 +1,9 @@
-﻿using Inchape_Agv.DbServices.Models;
+﻿using DbServices.Models;
 using System.Data;
 using System.Data.SQLite;
 using System.Text;
 
-namespace Inchape_Agv.DbServices.Fuctions
+namespace DbServices.Fuctions
 {
     public class DB_Stock
     {

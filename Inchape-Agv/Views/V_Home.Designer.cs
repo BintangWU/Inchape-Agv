@@ -71,7 +71,6 @@
             btn_send.TabIndex = 2;
             btn_send.Text = "SEND TO STORAGE";
             btn_send.UseVisualStyleBackColor = true;
-            btn_send.Click += btn_send_Click;
             // 
             // btn_clearProdNo
             // 
@@ -89,6 +88,7 @@
             // 
             // dataGridView1
             // 
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(10, 152);
             dataGridView1.Margin = new Padding(10);

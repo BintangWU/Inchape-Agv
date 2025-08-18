@@ -1,7 +1,10 @@
 ﻿using FontAwesome.Sharp;
-using Inchape_Agv.DbServices.Models;
+using DbServices.Models;
 using System.Data;
 using Inchape_Agv.Utilities;
+using DbServices;
+using System.Diagnostics;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Inchape_Agv.Views
 {
@@ -9,6 +12,16 @@ namespace Inchape_Agv.Views
     {
         private static DataTable dtStocks = new DataTable();
         private int idData;
+
+        private Dictionary<string, string> headerMap = new Dictionary<string, string>
+        {
+            { "name", "NAME" },
+            { "route", "ROUTE" },
+            { "markId", "MARK" },
+            { "endMarkId", "END MARK" },
+            { "typeStock", "STOCK" },
+            { "type", "TYPE" }
+        };
 
         public V_Stocks()
         {
@@ -71,6 +84,7 @@ namespace Inchape_Agv.Views
                             break;
 
                         case "import":
+                            ImportDialog();
                             break;
 
                         case "export":
@@ -85,24 +99,69 @@ namespace Inchape_Agv.Views
             }
         }
 
+        private DataTable ImportFromCSV(Dictionary<string, string> headerMap, string filePath)
+        {
+            DataTable dt = new DataTable();
+            using (StreamReader reader = new StreamReader(filePath))
+            {
+                var headers = reader.ReadLine().Split(',');
+                var headersMap = headers.Select(h => headerMap.ContainsKey(h) ? headerMap[h] : h).ToList();
+
+                foreach (var col in headersMap)
+                    dt.Columns.Add(col);
+
+                while(!reader.EndOfStream)
+                {
+                    var content = reader.ReadLine().Split(',');
+                    DataRow row = dt.NewRow();
+                    for (int i = 0; i < headersMap.Count; i++)
+                        row[headersMap[i]] = content[i];
+                    dt.Rows.Add(row);   
+                }
+                return dt; 
+            }
+        }
+
         private void ExportDialog()
         {
-            using (SaveFileDialog dialog = new SaveFileDialog())
+            DataTable dt = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
+            using (SaveFileDialog saveDialog = new SaveFileDialog())
             {
-                dialog.Filter = "CSV files (*.csv)|*.csv";
-                dialog.Title = "Save CSV File";
-                dialog.FileName = "Stock-Config.csv";
+                saveDialog.Filter = "CSV files (*.csv)|*.csv";
+                saveDialog.FileName = "Stock-Config.csv";
 
-                if (dialog.ShowDialog() == DialogResult.OK)
+                bool flag = saveDialog.ShowDialog() == DialogResult.OK;
+                if (flag)
                 {
                     try
                     {
-
+                        FileOperations.ExportCSV(headerMap, dt, saveDialog.FileName);
+                        MessageBox.Show("Export complete.");
                     }
-                    catch (Exception ex)
-                    {
+                    catch (Exception ex) { }
+                }
+            }
+        }
 
+        private void ImportDialog()
+        {
+            using (OpenFileDialog openDialog = new OpenFileDialog())
+            {
+                openDialog.Multiselect = false;
+                openDialog.Filter = "CSV files (*.csv)|*.csv";
+                
+                bool flag = openDialog.ShowDialog() == DialogResult.OK;
+                if (flag)
+                {
+                    try
+                    { 
+                        DataTable dt = ImportFromCSV(headerMap, openDialog.FileName);
+                        foreach (DataRow dr in dt.Rows)
+                        {
+                            Debug.WriteLine(dr["NAME"]);
+                        }
                     }
+                    catch (Exception ex) { }
                 }
             }
         }
@@ -141,7 +200,9 @@ namespace Inchape_Agv.Views
                 }
             }
             catch { }
+
         }
+
         private void V_Stocks_Load(object sender, EventArgs e)
         {
             dtg_stocks.DataSource = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];

@@ -15,9 +15,11 @@ namespace Inchape_Agv.Views
 
             btn_refreshCom.Tag = "comList";
             btn_apply.Tag = "apply";
+            btn_save.Tag = "save";
 
             btn_refreshCom.Click += Button_Clik;
             btn_apply.Click += Button_Clik;
+            btn_save.Click += Button_Clik;
 
             tb_rfAddr.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
             tb_serverPort.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
@@ -34,6 +36,20 @@ namespace Inchape_Agv.Views
                     switch (action) {
                         case "comList":
                             cbo_comPort.DataSource = SerialPort.GetPortNames().ToList();
+                            break;
+
+                        case "save":
+                            SysConfigModel model = new SysConfigModel
+                            {
+                                ComPort = cbo_comPort.Text.ToString().ToUpper(),
+                                Baudrate = int.TryParse(cbo_baud.Text, out var baudrate) ? baudrate : 0,
+                                WirelessAddr = int.TryParse(tb_rfAddr.Text, out var wireless) ? wireless : 0, 
+                                ServerPort = int.TryParse(tb_serverPort.Text, out var server) ? server : 0
+                            };
+                            bool flag = SysConfig.Save(model);
+                            string message = flag ? "Save complete!" : " Failed save file";
+                            MessageBox.Show($"{message}", "Information", MessageBoxButtons.OK);
+
                             break;
 
                         case "apply":
@@ -55,10 +71,10 @@ namespace Inchape_Agv.Views
 
             if (config != null)
             {
-                cbo_comPort.SelectedText = config.ComPort.ToString().ToUpper();
-                cbo_baud.SelectedText = Convert.ToString(config.Baudrate);
-                tb_rfAddr.Text = Convert.ToString(config.WirelessAddr);
-                tb_serverPort.Text = Convert.ToString(config.ServerPort);
+                cbo_comPort.SelectedItem = config.ComPort.ToString().ToUpper();
+                cbo_baud.SelectedItem = config.Baudrate.ToString();
+                tb_rfAddr.Text = config.WirelessAddr.ToString();
+                tb_serverPort.Text = config.ServerPort.ToString();
             }
             else
             {

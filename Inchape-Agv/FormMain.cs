@@ -38,7 +38,7 @@ namespace Inchape_Agv
             }
 
             //HttpAPI.Instance.StartAPI(8000);
-            CarServices.CarControl.Instance.InitialCommunication();
+            //CarServices.CarControl.Instance.InitialCommunication();
             _navigate.OpenUserControl(new V_Home());
         }
 

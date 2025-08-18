@@ -2,7 +2,7 @@
 using System.Data.SQLite;
 using System.Diagnostics;
 
-namespace Inchape_Agv.DbServices
+namespace DbServices
 {
     public class DbHelper
     {

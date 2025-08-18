@@ -1,12 +1,6 @@
-﻿using Inchape_Agv.DbServices.Fuctions;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DbServices.Fuctions;
 
-namespace Inchape_Agv.DbServices
+namespace DbServices
 {
     public class DbServices
     {

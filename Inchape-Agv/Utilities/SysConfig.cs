@@ -37,12 +37,20 @@ namespace Inchape_Agv.Utilities
             return JsonSerializer.Deserialize<SysConfigModel>(json);
         }
 
-        public void Save(SysConfigModel model)
+        public static bool Save(SysConfigModel model)
         {
-            Directory.CreateDirectory(_configFolder);
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string json = JsonSerializer.Serialize(model, options);
-            File.WriteAllText(_configFile, json);
+            try
+            {
+                Directory.CreateDirectory(_configFolder);
+                var options = new JsonSerializerOptions { WriteIndented = true };
+                string json = JsonSerializer.Serialize(model, options);
+                File.WriteAllText(_configFile, json);
+                return true;
+            }
+            catch (Exception ex) 
+            {
+                return false;
+            }
         }
     }
 }

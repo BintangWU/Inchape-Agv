@@ -45,6 +45,7 @@
             label5 = new Label();
             label6 = new Label();
             tb_ip = new TextBox();
+            btn_save = new FontAwesome.Sharp.IconButton();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             SuspendLayout();
@@ -136,9 +137,9 @@
             btn_apply.IconChar = FontAwesome.Sharp.IconChar.None;
             btn_apply.IconColor = Color.Black;
             btn_apply.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btn_apply.Location = new Point(10, 198);
+            btn_apply.Location = new Point(10, 235);
             btn_apply.Name = "btn_apply";
-            btn_apply.Size = new Size(250, 31);
+            btn_apply.Size = new Size(266, 31);
             btn_apply.TabIndex = 8;
             btn_apply.Text = "APPLY";
             btn_apply.UseVisualStyleBackColor = true;
@@ -252,10 +253,24 @@
             tb_ip.Size = new Size(156, 26);
             tb_ip.TabIndex = 7;
             // 
+            // btn_save
+            // 
+            btn_save.Font = new Font("Consolas", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_save.IconChar = FontAwesome.Sharp.IconChar.None;
+            btn_save.IconColor = Color.Black;
+            btn_save.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btn_save.Location = new Point(10, 198);
+            btn_save.Name = "btn_save";
+            btn_save.Size = new Size(266, 31);
+            btn_save.TabIndex = 12;
+            btn_save.Text = "SAVE";
+            btn_save.UseVisualStyleBackColor = true;
+            // 
             // V_Settings
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(btn_save);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(btn_apply);
@@ -290,5 +305,6 @@
         private Label label6;
         private TextBox tb_ip;
         private TextBox tb_serverPort;
+        private FontAwesome.Sharp.IconButton btn_save;
     }
 }

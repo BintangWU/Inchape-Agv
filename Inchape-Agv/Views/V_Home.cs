@@ -5,10 +5,10 @@
         public V_Home()
         {
             InitializeComponent();
-        }
 
-        private void btn_send_Click(object sender, EventArgs e)
-        {
+            btn_send.Tag = "send";
+            btn_clearProdNo.Tag = "clear";
+
 
         }
     }
