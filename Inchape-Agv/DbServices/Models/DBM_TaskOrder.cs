@@ -11,8 +11,8 @@ namespace DbServices.Models
         private int _id;
         private string? _prodNo;
         private string? _status;
-        private DateTime _startTime;
-        private DateTime _endTime;
+        private string? _startTime;
+        private string? _endTime;
         
         public int ID
         {
@@ -32,13 +32,13 @@ namespace DbServices.Models
             set { _status = value; }
         }
 
-        public DateTime StartTime
+        public string StartTime
         {
             get { return _startTime; }
             set { _startTime = value; }
         }
 
-        public DateTime EndTime
+        public string EndTime
         {
             get { return _endTime; }
             set { _endTime = value; }

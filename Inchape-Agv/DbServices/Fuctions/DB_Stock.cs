@@ -1,6 +1,7 @@
 ﻿using DbServices.Models;
 using System.Data;
 using System.Data.SQLite;
+using System.Diagnostics;
 using System.Text;
 
 namespace DbServices.Fuctions
@@ -16,8 +17,8 @@ namespace DbServices.Fuctions
             sqlString.Append("VALUES ");
             sqlString.Append("(@Index, @Name, @Route, @MarkId, @EndMarkId, @TypeStock, @Type)");
 
-            SQLiteParameter[] parameters =
-            [
+            SQLiteParameter[] parameters = new SQLiteParameter[]
+            {
                 new SQLiteParameter("@Index", model.Index),
                 new SQLiteParameter("@Name", model.Name),
                 new SQLiteParameter("@Route", model.Route),
@@ -25,9 +26,9 @@ namespace DbServices.Fuctions
                 new SQLiteParameter("@EndMarkId", model.EndMarkId),
                 new SQLiteParameter("@TypeStock", model.TypeStock),
                 new SQLiteParameter("@Type", model.Type)
-            ];
+            };
 
-            object obj = DbHelper.GetSingle(sqlString.ToString(), parameters);  
+            object obj = DbHelper.GetSingle(sqlString.ToString(), parameters);
             bool flag = obj == null;
             int results;
 
@@ -37,7 +38,7 @@ namespace DbServices.Fuctions
                 results = Convert.ToInt32(obj);
             return results;
         }
-        
+
         public bool Update(DBM_Stock model)
         {
             StringBuilder sqlString = new StringBuilder();
@@ -48,11 +49,11 @@ namespace DbServices.Fuctions
                 "markId= @MarkId, " +
                 "endMarkId= @EndMarkId, " +
                 "typeStock= @TypeStock, " +
-                "type= @Type " );
+                "type= @Type ");
             sqlString.Append("WHERE id= @Id");
 
-            SQLiteParameter[] parameters =
-            [
+            SQLiteParameter[] parameters = new SQLiteParameter[]
+            {
                 new SQLiteParameter("@Id", model.ID),
                 new SQLiteParameter("@Index", model.Index),
                 new SQLiteParameter("@Name", model.Name),
@@ -61,10 +62,10 @@ namespace DbServices.Fuctions
                 new SQLiteParameter("@EndMarkId", model.EndMarkId),
                 new SQLiteParameter("@TypeStock", model.TypeStock),
                 new SQLiteParameter("@Type", model.Type)
-            ];
+            };
 
-            int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);    
-            return rows > 0;    
+            int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);
+            return rows > 0;
         }
 
         public bool Update(string stockName, string prodNo)
@@ -74,11 +75,11 @@ namespace DbServices.Fuctions
             sqlString.Append("prodNo= @ProdNo ");
             sqlString.Append("WHERE name= @Name");
 
-            SQLiteParameter[] parameters =
-            [
+            SQLiteParameter[] parameters = new SQLiteParameter[]
+            {
                 new SQLiteParameter("@Name", stockName),
                 new SQLiteParameter("@ProdNo", prodNo)
-            ];
+            };
 
             int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);
             return rows > 0;
@@ -90,20 +91,24 @@ namespace DbServices.Fuctions
             sqlString.Append($"DELETE FROM {_db} ");
             sqlString.Append("WHERE id= @Id");
 
-            SQLiteParameter[] parameters = [
+            SQLiteParameter[] parameters = new SQLiteParameter[]
+            {
                 new SQLiteParameter("@Id", Convert.ToString(id))
-            ];
+            };
 
             int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);
             return rows > 0;
         }
 
-        public DataSet GetList()
+        public DataSet GetList(string query = null)
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append("SELECT * ");
             sqlString.Append($"FROM {_db} ");
 
+            bool flag = query != null;
+            if (flag)
+                sqlString.Append($"{query} ");
             return DbHelper.DataQuery(sqlString.ToString());
         }
     }

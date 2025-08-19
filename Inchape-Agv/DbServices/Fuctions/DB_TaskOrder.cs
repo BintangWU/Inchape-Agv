@@ -22,14 +22,13 @@ namespace DbServices.Fuctions
             sqlString.Append($"INSERT INTO {_db} ");
             sqlString.Append("(prodNo, status, startTime) ");
             sqlString.Append("VALUES (@ProdNo, @Status, @StartTime) ");
-            //SELECT* from db_stocks WHERE prodNo IS NULL AND typeStock = "FG" AND type IN('LH', 'RH') ORDER BY idx ASC, type ASC LIMIT 2;
 
-            SQLiteParameter[] parameters =
-            [
+            SQLiteParameter[] parameters = new SQLiteParameter[]
+            {
                 new SQLiteParameter("@ProdNo", model.ProdNo),
                 new SQLiteParameter("@Status", model.Status),
                 new SQLiteParameter("@StartTime", model.StartTime)
-            ];
+            };
 
             object obj = DbHelper.GetSingle(sqlString.ToString(), parameters);
             bool flag = obj == null;
@@ -42,19 +41,19 @@ namespace DbServices.Fuctions
             return results; 
         }
 
-        public bool Update(DBM_TaskOrder model)
+        public bool Update(DBM_TaskOrder model) //Update TaskOrder by ProdNo
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"UPDATE {_db} SET ");
-            sqlString.Append("statusLH= @StatusLH, " +
-                "endTime= @EndTime ");
-            sqlString.Append("WHERE prodNo= @ProdNo");
+            sqlString.Append("status= @Status, endTime= @EndTime ");
+            sqlString.Append("WHERE prodNo= @ProdNo ");
 
-            SQLiteParameter[] parameters =
-            [
+            SQLiteParameter[] parameters = new SQLiteParameter[]
+            {
                 new SQLiteParameter("@ProdNo", model.ProdNo),
-                new SQLiteParameter("@status", model.Status)
-            ];
+                new SQLiteParameter("@tatus", model.Status),
+                new SQLiteParameter("EndTime", model.EndTime)
+            };
 
             int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);
             return rows > 0;
@@ -65,10 +64,7 @@ namespace DbServices.Fuctions
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append("SELECT * ");
             sqlString.Append($"FROM {_db} ");
-
             return DbHelper.DataQuery(sqlString.ToString());
         }
-
-        
     }
 }

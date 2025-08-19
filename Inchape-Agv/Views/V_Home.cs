@@ -1,5 +1,9 @@
 ﻿
+using DbServices.Models;
 using FontAwesome.Sharp;
+using Microsoft.AspNetCore.Builder;
+using System.Data;
+using System.Diagnostics;
 
 namespace Inchape_Agv.Views
 {
@@ -24,8 +28,8 @@ namespace Inchape_Agv.Views
                     string action = btn.Tag?.ToString() ?? "";
                     switch (action)
                     {
-                        case "send": 
-
+                        case "send":
+                            SendToStock(tb_prodNo.Text.ToString());
                             break;
 
                         case "clear":
@@ -37,9 +41,54 @@ namespace Inchape_Agv.Views
             catch { }
         }
 
-        private void SendToStock(string prodNo)
+        private bool SendToStock(string prodNo)
         {
+            bool result = false;
+            DataTable dt = DbServices.DbServices.Instance.DB_Stock.GetList("WHERE (prodNo IS NULL OR prodNo='-' OR prodNo='') " +
+                "AND typeStock= 'FG' " +
+                "AND type IN ('LH', 'RH') " +
+                "ORDER BY idx ASC, type ASC LIMIT 2").Tables["ds"];
 
+            bool flag = dt.Rows.Count == 2;
+            if (flag)
+            {
+                int i = 0;
+                string stockName = "";
+                string[] stockListName = new string[2];
+
+                foreach (DataRow dr in dt.Rows)
+                {
+                    stockListName[i] = dr["name"].ToString();
+                    i++;
+                }
+
+                bool flag2 = stockListName[0] == stockListName[1];
+                if (flag2)
+                {
+                    stockName = stockListName[0].ToString();
+                    DBM_TaskOrder data = new DBM_TaskOrder
+                    {
+                        ProdNo = prodNo.ToString().ToUpper(),
+                        Status = "Stock",
+                        StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                    };
+
+                    DbServices.DbServices.Instance.DB_Stock.Update(stockName, prodNo);
+                    DbServices.DbServices.Instance.DB_TaskOrder.Add(data);
+                    result = true;
+                }
+                else
+                {
+                    result = false;
+                    Debug.WriteLine("Storage Tidak Sama");
+                }
+            }
+            else
+            {
+                result = false;
+                Debug.WriteLine("Invalid Storage");
+            }
+            return result;
         }
     }
 }

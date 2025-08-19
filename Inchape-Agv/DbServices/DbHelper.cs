@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Data.Common;
 using System.Data.SQLite;
 using System.Diagnostics;
 
@@ -58,35 +59,43 @@ namespace DbServices
                     catch (SQLiteException ex)
                     {
                         result = null;
-                        Debug.WriteLine(ex.Message);
+                        connection.Close();
+                        throw ex;
                     }
                 }
             }
             return result;
         }
 
-        //public static void GetSingle(string sqlQuery, SQLiteParameter[] parameters)
-        //{
-        //    using (SQLiteConnection connection = new SQLiteConnection(dbConnectionString)) {
-        //        connection.Open();
+        public static object GetSingle(string sqlString)
+        {
+            object result;
+            using (SQLiteConnection connection = new SQLiteConnection(dbConnectionString))
+            {
+                using (SQLiteCommand command = new SQLiteCommand(sqlString, connection))
+                {
+                    try
+                    {
+                        bool flag = connection.State != ConnectionState.Open;
+                        if (flag)
+                            connection.Open();
 
-        //        using (SQLiteTransaction transaction = connection.BeginTransaction()) 
-        //        { 
-        //            using (SQLiteCommand command = new SQLiteCommand())
-        //            {
-        //                try
-        //                {
-        //                    DbHelper.PrepareCommand(connection, transaction, command, sqlQuery, parameters);
-        //                    object obj = command.ExecuteNonQuery();
-        //                    bool flag = object.Equals(obj, null) || object.Equals (obj, DBNull.Value);  
-        //                }
-        //                catch (SQLiteException ex) { }
-        //            }
-        //            transaction.Commit();
-        //        } 
-        //    }
-        //}
-        
+                        object obj = command.ExecuteScalar();
+                        bool flag2 = object.Equals(obj, null) || object.Equals(obj, DBNull.Value);
+                        if (flag2)
+                            result = null;
+                        else
+                            result = obj;
+                    }
+                    catch (SQLiteException ex) 
+                    {
+                        connection.Close();
+                        throw ex;
+                    }
+                }
+            }
+            return result;
+        }
 
         public static int ExecuteSql(string sqlQuery, SQLiteParameter[] parameters)
         {
@@ -105,7 +114,8 @@ namespace DbServices
                     catch (SQLiteException ex)
                     {
                         result = -1;
-                        Debug.WriteLine(ex.Message);
+                        connection.Close();
+                        throw ex;
                     }
                 }
             }
@@ -131,8 +141,8 @@ namespace DbServices
             }
             catch (SQLiteException ex)
             {
-                Debug.WriteLine(ex.Message);
-                return null;
+                results = null;
+                throw ex;
             }
             return results;
         }
@@ -154,7 +164,8 @@ namespace DbServices
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex.Message);
+                        connection.Close();
+                        throw ex;
                     }
                     results = ds;
                 }
