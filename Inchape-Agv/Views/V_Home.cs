@@ -1,7 +1,6 @@
 ﻿
 using DbServices.Models;
 using FontAwesome.Sharp;
-using Microsoft.AspNetCore.Builder;
 using System.Data;
 using System.Diagnostics;
 
@@ -17,6 +16,15 @@ namespace Inchape_Agv.Views
             btn_clearProdNo.Tag = "clear";
 
             btn_send.Click += Button_Click;
+            //tb_prodNo.KeyDown += Tb_prodNo_KeyDown;
+        }
+
+        private void Tb_prodNo_KeyDown(object? sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                btn_send.PerformClick();
+            }
         }
 
         private void Button_Click(object? sender, EventArgs e)
@@ -29,7 +37,8 @@ namespace Inchape_Agv.Views
                     switch (action)
                     {
                         case "send":
-                            SendToStock(tb_prodNo.Text.ToString());
+                            CarServices.CarControl.Instance.CarAddStock(tb_prodNo.Text.ToString());
+                            //SendToStock(tb_prodNo.Text.ToString());
                             break;
 
                         case "clear":
@@ -38,7 +47,10 @@ namespace Inchape_Agv.Views
                     }
                 }
             }
-            catch { }
+            catch (Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private bool SendToStock(string prodNo)
@@ -73,20 +85,18 @@ namespace Inchape_Agv.Views
                         StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                     };
 
-                    DbServices.DbServices.Instance.DB_Stock.Update(stockName, prodNo);
-                    DbServices.DbServices.Instance.DB_TaskOrder.Add(data);
+                    bool flag3 = DbServices.DbServices.Instance.DB_Stock.Update(stockName, prodNo);
+                    int flag4 = DbServices.DbServices.Instance.DB_TaskOrder.Add(data);
+
+                    bool flag5 = (flag3 && (flag4 > 0));
+                    string msgBox = (flag5 ? "Success" : "Failed") + " send ";
+                    msgBox += $"[{tb_prodNo.Text.ToString().ToUpper()}]";
+                    DialogResult dialog = MessageBox.Show(msgBox, "Question", MessageBoxButtons.YesNo);
+                                        
                     result = true;
                 }
                 else
-                {
                     result = false;
-                    Debug.WriteLine("Storage Tidak Sama");
-                }
-            }
-            else
-            {
-                result = false;
-                Debug.WriteLine("Invalid Storage");
             }
             return result;
         }

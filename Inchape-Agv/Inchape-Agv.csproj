@@ -52,7 +52,7 @@
 
   <ItemGroup>
     <None Update="Database.db">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="SysConfig\SysConfig.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

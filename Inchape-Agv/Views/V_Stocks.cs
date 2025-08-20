@@ -216,7 +216,7 @@ namespace Inchape_Agv.Views
             try
             {
                 idData = Convert.ToInt32(dtg_stocks.Rows[e.RowIndex].Cells["id"].Value);
-                tb_index.Text = dtg_stocks.Rows[e.RowIndex].Cells["index"].Value.ToString();
+                //tb_index.Text = dtg_stocks.Rows[e.RowIndex].Cells["index"].Value.ToString();
                 tb_name.Text = dtg_stocks.Rows[e.RowIndex].Cells["name"].Value.ToString();
                 tb_route.Text = dtg_stocks.Rows[e.RowIndex].Cells["route"].Value.ToString();
                 tb_markId.Text = dtg_stocks.Rows[e.RowIndex].Cells["markId"].Value.ToString();

@@ -15,7 +15,6 @@ namespace CarServices
         private int _functionCode;
         private bool _onDuty;
         
-
         public Car(int carId)
         {
             _carId = carId;

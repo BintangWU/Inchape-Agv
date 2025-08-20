@@ -1,10 +1,8 @@
-using APIService;
 using FontAwesome.Sharp;
 using Inchape_Agv.Utilities;
 using Inchape_Agv.Views;
 using System.Diagnostics;
-using CarServices;
-using System.Runtime.InteropServices;
+using System.Windows;
 
 
 namespace Inchape_Agv
@@ -33,12 +31,26 @@ namespace Inchape_Agv
         {
             if (Process.GetProcessesByName(Path.GetFileNameWithoutExtension(System.Reflection.Assembly.GetEntryAssembly().Location)).Count() > 1)
             {
-                MessageBox.Show("Don't Run multiple instance!\r\nMaybe Check task manager if this application running on background", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                System.Windows.MessageBox.Show("Don't Run multiple instance!\r\nMaybe Check task manager if this application running on background", 
+                    "Error", 
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Error);
                 Process.GetCurrentProcess().Kill();
             }
 
+            SysConfigModel cfg = SysConfig.Load();
+            bool flag = CarServices.CarControl.Instance.InitialCommunication(
+                cfg.ComPort.ToString().ToUpper(), 
+                cfg.Baudrate,
+                cfg.WirelessAddr);
+
+            if (!flag)
+                System.Windows.MessageBox.Show($"{cfg.ComPort} with {cfg.Baudrate} can't open!, please check the port", 
+                    "Error", 
+                    MessageBoxButton.OK, 
+                    MessageBoxImage.Error);
+
             //HttpAPI.Instance.StartAPI(8000);
-            //CarServices.CarControl.Instance.InitialCommunication();
             _navigate.OpenUserControl(new V_Home());
         }
 

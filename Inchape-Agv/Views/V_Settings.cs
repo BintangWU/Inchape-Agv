@@ -23,6 +23,7 @@ namespace Inchape_Agv.Views
 
             tb_rfAddr.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
             tb_serverPort.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
+            tb_homeMark.KeyPress += TextBoxNumeric.NumericComa_KeyPress;
             cbo_baud.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
         }
 
@@ -43,8 +44,9 @@ namespace Inchape_Agv.Views
                             {
                                 ComPort = cbo_comPort.Text.ToString().ToUpper(),
                                 Baudrate = int.TryParse(cbo_baud.Text, out var baudrate) ? baudrate : 0,
-                                WirelessAddr = int.TryParse(tb_rfAddr.Text, out var wireless) ? wireless : 0, 
-                                ServerPort = int.TryParse(tb_serverPort.Text, out var server) ? server : 0
+                                WirelessAddr = int.TryParse(tb_rfAddr.Text, out var wireless) ? wireless : 0,
+                                ServerPort = int.TryParse(tb_serverPort.Text, out var server) ? server : 0,
+                                HomeMark = tb_homeMark.Text.ToString()
                             };
                             bool flag = SysConfig.Save(model);
                             string message = flag ? "Save complete!" : " Failed save file";
@@ -75,6 +77,7 @@ namespace Inchape_Agv.Views
                 cbo_baud.SelectedItem = config.Baudrate.ToString();
                 tb_rfAddr.Text = config.WirelessAddr.ToString();
                 tb_serverPort.Text = config.ServerPort.ToString();
+                tb_homeMark.Text = config.HomeMark.ToString();
             }
             else
             {

@@ -8,6 +8,7 @@ namespace Inchape_Agv.Utilities
         public int Baudrate { get; set; }
         public int WirelessAddr { get; set; }
         public int ServerPort { get; set; }
+        public string? HomeMark { get; set; }
     }
 
     public class SysConfig
@@ -23,7 +24,8 @@ namespace Inchape_Agv.Utilities
                 ComPort = "COM1",
                 Baudrate = 9600,
                 WirelessAddr = 0,
-                ServerPort = 5000
+                ServerPort = 5000,
+                HomeMark = "11,12"
             };
         }
         public static SysConfigModel Load()

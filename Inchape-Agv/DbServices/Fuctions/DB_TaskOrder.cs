@@ -1,14 +1,7 @@
 ﻿using DbServices.Models;
-using Inchape_Agv.Views;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Data.SQLite;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 
 namespace DbServices.Fuctions
 {
