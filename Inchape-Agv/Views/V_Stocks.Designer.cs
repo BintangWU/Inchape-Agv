@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             label1 = new Label();
             label2 = new Label();
             label4 = new Label();
@@ -131,24 +131,24 @@
             dtg_stocks.AllowUserToResizeRows = false;
             dtg_stocks.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dtg_stocks.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = Color.LightSkyBlue;
-            dataGridViewCellStyle5.Font = new Font("Consolas", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle5.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.True;
-            dtg_stocks.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = Color.LightSkyBlue;
+            dataGridViewCellStyle1.Font = new Font("Consolas", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            dtg_stocks.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             dtg_stocks.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dtg_stocks.Columns.AddRange(new DataGridViewColumn[] { id, index, name, route, markId, endMarkId, typeStock, type, prodNo, status, delete });
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = SystemColors.Window;
-            dataGridViewCellStyle6.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            dataGridViewCellStyle6.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.False;
-            dtg_stocks.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Consolas", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dtg_stocks.DefaultCellStyle = dataGridViewCellStyle2;
             dtg_stocks.Location = new Point(10, 81);
             dtg_stocks.Margin = new Padding(10);
             dtg_stocks.Name = "dtg_stocks";
@@ -170,7 +170,7 @@
             // index
             // 
             index.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
-            index.DataPropertyName = "index";
+            index.DataPropertyName = "idx";
             index.HeaderText = "IDX";
             index.Name = "index";
             index.ReadOnly = true;
@@ -277,7 +277,7 @@
             btn_add.IconColor = Color.Black;
             btn_add.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btn_add.IconSize = 24;
-            btn_add.Location = new Point(784, 10);
+            btn_add.Location = new Point(622, 9);
             btn_add.Margin = new Padding(3, 10, 3, 3);
             btn_add.Name = "btn_add";
             btn_add.Padding = new Padding(0, 5, 0, 0);
@@ -347,7 +347,7 @@
             btn_update.IconColor = Color.Black;
             btn_update.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btn_update.IconSize = 24;
-            btn_update.Location = new Point(865, 10);
+            btn_update.Location = new Point(703, 9);
             btn_update.Margin = new Padding(3, 10, 3, 3);
             btn_update.Name = "btn_update";
             btn_update.Padding = new Padding(0, 5, 0, 0);
@@ -389,7 +389,7 @@
             btn_import.IconColor = Color.Black;
             btn_import.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btn_import.IconSize = 24;
-            btn_import.Location = new Point(703, 10);
+            btn_import.Location = new Point(784, 9);
             btn_import.Margin = new Padding(3, 10, 3, 3);
             btn_import.Name = "btn_import";
             btn_import.Padding = new Padding(0, 5, 0, 0);
@@ -417,7 +417,7 @@
             btn_export.IconColor = Color.Black;
             btn_export.IconFont = FontAwesome.Sharp.IconFont.Auto;
             btn_export.IconSize = 24;
-            btn_export.Location = new Point(622, 10);
+            btn_export.Location = new Point(865, 9);
             btn_export.Margin = new Padding(3, 10, 3, 3);
             btn_export.Name = "btn_export";
             btn_export.Padding = new Padding(0, 5, 0, 0);
@@ -501,6 +501,8 @@
         private FontAwesome.Sharp.IconButton btn_import;
         private LinkLabel linkLabel1;
         private FontAwesome.Sharp.IconButton btn_export;
+        private Label label7;
+        private TextBox tb_index;
         private DataGridViewTextBoxColumn id;
         private DataGridViewTextBoxColumn index;
         private DataGridViewTextBoxColumn name;
@@ -512,7 +514,5 @@
         private DataGridViewTextBoxColumn prodNo;
         private DataGridViewTextBoxColumn status;
         private DataGridViewLinkColumn delete;
-        private Label label7;
-        private TextBox tb_index;
     }
 }

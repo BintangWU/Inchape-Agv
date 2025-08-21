@@ -1,10 +1,7 @@
 ﻿using DbServices.Models;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
-using System.Diagnostics;
 using System.Text;
-using static System.Data.Entity.Infrastructure.Design.Executor;
 
 namespace DbServices.Fuctions
 {

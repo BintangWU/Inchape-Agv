@@ -13,13 +13,15 @@ namespace DbServices.Fuctions
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"INSERT INTO {_db} ");
-            sqlString.Append("(prodNo, status, startTime) ");
-            sqlString.Append("VALUES (@ProdNo, @Status, @StartTime) ");
+            sqlString.Append("(prodNo, status, destination, route, startTime) ");
+            sqlString.Append("VALUES (@ProdNo, @Status, @Destination, @Route, @StartTime) ");
 
             SQLiteParameter[] parameters = new SQLiteParameter[]
             {
                 new SQLiteParameter("@ProdNo", model.ProdNo),
                 new SQLiteParameter("@Status", model.Status),
+                new SQLiteParameter("@Destination", model.Destination),
+                new SQLiteParameter("Route", model.Route),
                 new SQLiteParameter("@StartTime", model.StartTime)
             };
 
@@ -38,13 +40,12 @@ namespace DbServices.Fuctions
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"UPDATE {_db} SET ");
-            sqlString.Append("status= @Status, endTime= @EndTime ");
+            sqlString.Append("endTime= @EndTime ");
             sqlString.Append("WHERE prodNo= @ProdNo ");
 
             SQLiteParameter[] parameters = new SQLiteParameter[]
             {
                 new SQLiteParameter("@ProdNo", model.ProdNo),
-                new SQLiteParameter("@tatus", model.Status),
                 new SQLiteParameter("EndTime", model.EndTime)
             };
 

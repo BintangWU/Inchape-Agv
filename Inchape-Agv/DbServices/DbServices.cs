@@ -9,6 +9,7 @@ namespace DbServices
 
         private DB_Stock? _dbStock;
         private DB_TaskOrder? _dbTaskOrder;
+        private DB_InOutbound? _dbInOutbound;
 
         public static DbServices Instance
         {
@@ -40,6 +41,16 @@ namespace DbServices
                 if (_dbTaskOrder == null)
                     _dbTaskOrder = new DB_TaskOrder();
                 return _dbTaskOrder;
+            }
+        }
+
+        public DB_InOutbound DB_InOutbound
+        {
+            get
+            {
+                if (_dbInOutbound == null)
+                    _dbInOutbound = new DB_InOutbound();
+                return _dbInOutbound;
             }
         }
     }

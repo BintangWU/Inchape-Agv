@@ -11,6 +11,8 @@ namespace DbServices.Models
         private int _id;
         private string? _prodNo;
         private string? _status;
+        private string? _destination;
+        private string? _route;
         private string? _startTime;
         private string? _endTime;
         
@@ -30,6 +32,18 @@ namespace DbServices.Models
         {
             get { return _status; }
             set { _status = value; }
+        }
+
+        public string Destination
+        {
+            get { return _destination; }
+            set { _destination = value; }
+        }
+
+        public string Route
+        {
+            get { return _route; }
+            set { _route = value; }
         }
 
         public string StartTime

@@ -37,7 +37,9 @@ namespace Inchape_Agv.Views
                     switch (action)
                     {
                         case "send":
-                            CarServices.CarControl.Instance.CarAddStock(tb_prodNo.Text.ToString());
+                            DataTable flag = DbServices.DbServices.Instance.DB_InOutbound.InboudStock(tb_prodNo.Text);
+                            //DataTable flag = DbServices.DbServices.Instance.DB_InOutbound.Outbound(tb_prodNo.Text);
+                            Debug.WriteLine(flag.Rows.Count);
                             //SendToStock(tb_prodNo.Text.ToString());
                             break;
 
@@ -51,54 +53,6 @@ namespace Inchape_Agv.Views
             {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        private bool SendToStock(string prodNo)
-        {
-            bool result = false;
-            DataTable dt = DbServices.DbServices.Instance.DB_Stock.GetList("WHERE (prodNo IS NULL OR prodNo='-' OR prodNo='') " +
-                "AND typeStock= 'FG' " +
-                "AND type IN ('LH', 'RH') " +
-                "ORDER BY idx ASC, type ASC LIMIT 2").Tables["ds"];
-
-            bool flag = dt.Rows.Count == 2;
-            if (flag)
-            {
-                int i = 0;
-                string stockName = "";
-                string[] stockListName = new string[2];
-
-                foreach (DataRow dr in dt.Rows)
-                {
-                    stockListName[i] = dr["name"].ToString();
-                    i++;
-                }
-
-                bool flag2 = stockListName[0] == stockListName[1];
-                if (flag2)
-                {
-                    stockName = stockListName[0].ToString();
-                    DBM_TaskOrder data = new DBM_TaskOrder
-                    {
-                        ProdNo = prodNo.ToString().ToUpper(),
-                        Status = "Stock",
-                        StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                    };
-
-                    bool flag3 = DbServices.DbServices.Instance.DB_Stock.Update(stockName, prodNo);
-                    int flag4 = DbServices.DbServices.Instance.DB_TaskOrder.Add(data);
-
-                    bool flag5 = (flag3 && (flag4 > 0));
-                    string msgBox = (flag5 ? "Success" : "Failed") + " send ";
-                    msgBox += $"[{tb_prodNo.Text.ToString().ToUpper()}]";
-                    DialogResult dialog = MessageBox.Show(msgBox, "Question", MessageBoxButtons.YesNo);
-                                        
-                    result = true;
-                }
-                else
-                    result = false;
-            }
-            return result;
         }
     }
 }

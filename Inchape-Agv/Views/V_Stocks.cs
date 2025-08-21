@@ -41,6 +41,8 @@ namespace Inchape_Agv.Views
             tb_route.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
             tb_markId.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
             tb_endMarkId.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
+
+            Debug.WriteLine("Hello");
         }
 
         private void ClearForm()
@@ -209,6 +211,7 @@ namespace Inchape_Agv.Views
         private void V_Stocks_Load(object sender, EventArgs e)
         {
             dtg_stocks.DataSource = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
+            dtg_stocks.Refresh();
         }
 
         private void dtg_stocks_CellClick(object sender, DataGridViewCellEventArgs e)

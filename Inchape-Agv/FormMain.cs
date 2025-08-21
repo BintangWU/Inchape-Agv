@@ -41,8 +41,7 @@ namespace Inchape_Agv
             SysConfigModel cfg = SysConfig.Load();
             bool flag = CarServices.CarControl.Instance.InitialCommunication(
                 cfg.ComPort.ToString().ToUpper(), 
-                cfg.Baudrate,
-                cfg.WirelessAddr);
+                cfg.Baudrate);
 
             if (!flag)
                 System.Windows.MessageBox.Show($"{cfg.ComPort} with {cfg.Baudrate} can't open!, please check the port", 

@@ -4,6 +4,7 @@ using LibCommunication.Controller;
 using LibCommunication.Messages;
 using System.Data;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace CarServices
 {
@@ -16,6 +17,7 @@ namespace CarServices
         private static volatile Dictionary<int, Car> CarDict = new Dictionary<int, Car>();
 
         private int _wirelessAddr;
+        private int[] _markHome;
         public static CarControl Instance
         {
             get
@@ -29,12 +31,17 @@ namespace CarServices
             }
         }
 
-        public bool InitialCommunication(string com, int baud, int wrls)
+        public bool InitialCommunication(string com, int baud)
         {
-            _wirelessAddr = wrls;
             CSDispatchController = new CSDispatchController(baud, com, 2);
             CSDispatchController.DispatchHubMsgRecvEvent += CSDispatchController_DispatchHubMsgRecvEvent;
             return CSDispatchController.StartWork();
+        }
+
+        public void InitialCarSystem(int wrlsAddr, string markHome)
+        {
+            _wirelessAddr = wrlsAddr;
+            _markHome = markHome.ToString().Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
         }
 
         private void CSDispatchController_DispatchHubMsgRecvEvent(LibCommunication.ConnectorBase connector, LibCommunication.IBaseMessage msg)
@@ -89,72 +96,6 @@ namespace CarServices
                 CSDispatchController.SendMessage(msg);
         }
 
-        //Car to Storage
-        public bool CarAddStock(string prodNo)
-        {
-            bool result = false;
-            int i = 0;
-            string stockName = "";
-            string[] stockListname = new string[2];
-
-            DataTable data = DbServices.DbServices.Instance.DB_Stock.GetList("WHERE (prodNo IS NULL OR prodNo='-' OR prodNo='') " +
-            "AND typeStock= 'FG' " +
-            "AND type IN ('LH', 'RH') " +
-            "ORDER BY idx ASC, type ASC LIMIT 2").Tables["ds"];
-
-            bool flag = data != null && data.Rows.Count == 2;
-            if (flag)
-            {
-                foreach (DataRow dr in data.Rows)
-                {
-                    stockListname[i] = dr["name"].ToString();
-                    i++;
-                }
-
-                if ((stockListname.Length > 0) && (stockListname[0].ToUpper() == stockListname[1].ToUpper()))
-                {
-                    stockName = stockListname[0];
-                    DBM_TaskOrder taskOrder = new DBM_TaskOrder()
-                    {
-                        ProdNo = prodNo.ToString().ToUpper(),
-                        Status = "In " + stockName,
-                        StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
-                    };
-
-                    var dialog = MessageBox.Show(
-                        $"Send [{prodNo}] to Storage [{stockName.ToUpper()}]",
-                        "Message",
-                        MessageBoxButtons.YesNo);
-
-                    if (dialog == DialogResult.Yes)
-                    {
-                        bool flag1 = DbServices.DbServices.Instance.DB_Stock.Update(stockName, prodNo.ToUpper());
-                        if (flag1)
-                        {
-                            bool flag2 = DbServices.DbServices.Instance.DB_TaskOrder.Add(taskOrder) > 0;
-                            if (flag2)
-                            {
-                                var carTask = GenTask(data);
-                                foreach (var item in carTask)
-                                {
-                                    Debug.WriteLine($"Route: {item.Route}-{item.MarkId}");
-                                }
-                            }
-                        }
-                        else
-                        {
-                            throw new Exception("Failed update database stock");
-                        }
-                    }
-                }
-                else
-                {
-                    throw new Exception("Name of stock LH and RH not match");
-                }
-            }
-            return result;
-        }
-
 
         public List<(int Route, int MarkId)> GenTask(DataTable data)
         {
@@ -176,9 +117,12 @@ namespace CarServices
         }
 
 
-        private void Thread_SendToStock(CarControl control)
+        private void Thread_DispatchingCar(CarControl control)
         {
             Log.Instance.WriteLog("Stock", "[THREAD SendToStock] -> Starting");
+
+            bool hasCar = false;
+            int[] markHome = control._markHome;
 
             for (; ; )
             {
@@ -186,7 +130,12 @@ namespace CarServices
                 {
                     foreach (Car car in CarDict.Values)
                     {
-
+                        //Check stop car at Home position
+                        if (car.FunctionCode == 53 && markHome.Contains(car.MarkId))
+                        {
+                        }
+                        else
+                            continue;
                     }
                 }
                 catch (Exception e)
