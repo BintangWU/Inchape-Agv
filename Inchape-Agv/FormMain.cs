@@ -3,6 +3,7 @@ using Inchape_Agv.Utilities;
 using Inchape_Agv.Views;
 using System.Diagnostics;
 using System.Windows;
+using APIService;
 
 
 namespace Inchape_Agv
@@ -38,16 +39,16 @@ namespace Inchape_Agv
                 Process.GetCurrentProcess().Kill();
             }
 
-            SysConfigModel cfg = SysConfig.Load();
-            bool flag = CarServices.CarControl.Instance.InitialCommunication(
-                cfg.ComPort.ToString().ToUpper(), 
-                cfg.Baudrate);
+            //SysConfigModel cfg = SysConfig.Load();
+            //bool flag = CarServices.CarControl.Instance.InitialCommunication(
+            //    cfg.ComPort.ToString().ToUpper(), 
+            //    cfg.Baudrate);
 
-            if (!flag)
-                System.Windows.MessageBox.Show($"{cfg.ComPort} with {cfg.Baudrate} can't open!, please check the port", 
-                    "Error", 
-                    MessageBoxButton.OK, 
-                    MessageBoxImage.Error);
+            //if (!flag)
+            //    System.Windows.MessageBox.Show($"{cfg.ComPort} with {cfg.Baudrate} can't open!, please check the port", 
+            //        "Error", 
+            //        MessageBoxButton.OK, 
+            //        MessageBoxImage.Error);
 
             //HttpAPI.Instance.StartAPI(8000);
             _navigate.OpenUserControl(new V_Home());

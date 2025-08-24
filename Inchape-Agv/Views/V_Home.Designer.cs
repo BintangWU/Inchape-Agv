@@ -31,8 +31,7 @@
             label1 = new Label();
             tb_prodNo = new TextBox();
             btn_send = new FontAwesome.Sharp.IconButton();
-            btn_clearProdNo = new FontAwesome.Sharp.IconButton();
-            backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            btn_test = new FontAwesome.Sharp.IconButton();
             SuspendLayout();
             // 
             // label1
@@ -71,30 +70,31 @@
             btn_send.Text = "SEND to WAREHOUSE";
             btn_send.UseVisualStyleBackColor = true;
             // 
-            // btn_clearProdNo
+            // btn_test
             // 
-            btn_clearProdNo.Cursor = Cursors.Hand;
-            btn_clearProdNo.Font = new Font("Consolas", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_clearProdNo.IconChar = FontAwesome.Sharp.IconChar.None;
-            btn_clearProdNo.IconColor = Color.Black;
-            btn_clearProdNo.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btn_clearProdNo.Location = new Point(669, 10);
-            btn_clearProdNo.Name = "btn_clearProdNo";
-            btn_clearProdNo.Size = new Size(140, 129);
-            btn_clearProdNo.TabIndex = 3;
-            btn_clearProdNo.Text = "CLEAR Prod No";
-            btn_clearProdNo.UseVisualStyleBackColor = true;
+            btn_test.Cursor = Cursors.Hand;
+            btn_test.Font = new Font("Consolas", 35.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_test.IconChar = FontAwesome.Sharp.IconChar.None;
+            btn_test.IconColor = Color.Black;
+            btn_test.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btn_test.Location = new Point(10, 172);
+            btn_test.Name = "btn_test";
+            btn_test.Size = new Size(153, 61);
+            btn_test.TabIndex = 4;
+            btn_test.Text = "TEST";
+            btn_test.UseVisualStyleBackColor = true;
             // 
             // V_Home
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(btn_clearProdNo);
+            Controls.Add(btn_test);
             Controls.Add(btn_send);
             Controls.Add(tb_prodNo);
             Controls.Add(label1);
             Name = "V_Home";
             Size = new Size(821, 498);
+            Load += V_Home_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -104,7 +104,6 @@
         private Label label1;
         private TextBox tb_prodNo;
         private FontAwesome.Sharp.IconButton btn_send;
-        private FontAwesome.Sharp.IconButton btn_clearProdNo;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private FontAwesome.Sharp.IconButton btn_test;
     }
 }

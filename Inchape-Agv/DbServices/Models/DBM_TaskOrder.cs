@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +14,9 @@ namespace DbServices.Models
         private string? _status;
         private string? _destination;
         private string? _route;
+        private string? _statusTask;
+        private string? _statusLH;
+        private string? _statusRH;
         private string? _startTime;
         private string? _endTime;
         
@@ -32,6 +36,24 @@ namespace DbServices.Models
         {
             get { return _status; }
             set { _status = value; }
+        }
+
+        public string StatusTask
+        {
+            get { return _statusTask; }
+            set { _statusTask = value; }
+        }
+
+        public string StatusLH
+        {
+            get { return _statusLH; }
+            set { _statusLH = value; }
+        }   
+
+        public string StatusRH
+        {
+            get { return _statusRH; }
+            set { _statusRH = value; }
         }
 
         public string Destination

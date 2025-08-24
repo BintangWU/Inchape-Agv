@@ -41,8 +41,6 @@ namespace Inchape_Agv.Views
             tb_route.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
             tb_markId.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
             tb_endMarkId.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
-
-            Debug.WriteLine("Hello");
         }
 
         private void ClearForm()

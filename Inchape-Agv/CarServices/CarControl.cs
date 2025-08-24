@@ -44,6 +44,10 @@ namespace CarServices
             _markHome = markHome.ToString().Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToArray();
         }
 
+        public void InitialThread()
+        {
+        }
+
         private void CSDispatchController_DispatchHubMsgRecvEvent(LibCommunication.ConnectorBase connector, LibCommunication.IBaseMessage msg)
         {
             try
@@ -124,7 +128,7 @@ namespace CarServices
             bool hasCar = false;
             int[] markHome = control._markHome;
 
-            for (; ; )
+            for (;;)
             {
                 try
                 {
@@ -133,10 +137,17 @@ namespace CarServices
                         //Check stop car at Home position
                         if (car.FunctionCode == 53 && markHome.Contains(car.MarkId))
                         {
+                            DataTable taskOrderData = DbServices.DbServices
+                                .Instance.DB_TaskOrder.GetList().Tables["ds"]
+                                .Select("endTime IS NULL", "id DESC")
+                                .CopyToDataTable();
+
+                            bool flag = taskOrderData != null && taskOrderData.Rows.Count > 0;
                         }
                         else
                             continue;
                     }
+                            
                 }
                 catch (Exception e)
                 {

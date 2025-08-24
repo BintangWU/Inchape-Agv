@@ -8,8 +8,7 @@ namespace APIService.Model
 {
     public class Request
     {
-        public int markId { get; set; }
-        public int route { get; set; }
-        public int address { get; set; }    
+        public int type { get; set; }
+        public string prodNo { get; set; }    
     }
 }

@@ -21,7 +21,7 @@ namespace DbServices.Fuctions
                 new SQLiteParameter("@ProdNo", model.ProdNo),
                 new SQLiteParameter("@Status", model.Status),
                 new SQLiteParameter("@Destination", model.Destination),
-                new SQLiteParameter("Route", model.Route),
+                new SQLiteParameter("@Route", model.Route),
                 new SQLiteParameter("@StartTime", model.StartTime)
             };
 
@@ -60,5 +60,7 @@ namespace DbServices.Fuctions
             sqlString.Append($"FROM {_db} ");
             return DbHelper.DataQuery(sqlString.ToString());
         }
+
+
     }
 }

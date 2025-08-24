@@ -1,3 +1,5 @@
+//using APIService;
+
 namespace Inchape_Agv
 {
     internal static class Program
@@ -11,6 +13,7 @@ namespace Inchape_Agv
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
+            //HttpAPI.Instance.StartAPI(5000);
             Application.Run(new FormMain());
         }
     }

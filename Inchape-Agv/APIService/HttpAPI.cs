@@ -59,6 +59,13 @@ namespace APIService
 
                 builder.Configure(app =>
                 {
+                    var env = app.ApplicationServices.GetRequiredService<IWebHostEnvironment>();
+                    if (env.IsDevelopment())
+                    {
+                        app.UseDeveloperExceptionPage();
+                    }
+
+                    app.UseStaticFiles();
                     app.UseRouting();
                     app.UseSwagger();
                     app.UseCors("AllowAll");
