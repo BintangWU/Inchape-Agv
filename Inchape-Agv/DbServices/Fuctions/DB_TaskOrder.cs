@@ -60,7 +60,5 @@ namespace DbServices.Fuctions
             sqlString.Append($"FROM {_db} ");
             return DbHelper.DataQuery(sqlString.ToString());
         }
-
-
     }
 }

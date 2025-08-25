@@ -55,7 +55,17 @@ namespace Inchape_Agv.Views
                                 .Select("endTime IS NULL")
                                 .CopyToDataTable();
 
-                            Debug.WriteLine(taskOrderData.Rows.Count);
+                            int[] routes = taskOrderData.Rows[0]["route"].ToString()
+                                    .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
+                                    .Select(int.Parse).ToArray();
+                            
+                            var index = Array.IndexOf(routes, 11);
+                            foreach (var route in routes)
+                            {
+                                Debug.Write(route);
+                                Debug.Write(", ");
+                            }
+                            Debug.WriteLine(index);
                             break;
                     }
                 }

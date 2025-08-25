@@ -5,6 +5,7 @@ using LibCommunication.Messages;
 using System.Data;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 namespace CarServices
 {
@@ -16,6 +17,7 @@ namespace CarServices
         private static CSDispatchController CSDispatchController;
         private static volatile Dictionary<int, Car> CarDict = new Dictionary<int, Car>();
 
+        private string _logName = "CarControl"; 
         private int _wirelessAddr;
         private int[] _markHome;
         public static CarControl Instance
@@ -123,9 +125,10 @@ namespace CarServices
 
         private void Thread_DispatchingCar(CarControl control)
         {
-            Log.Instance.WriteLog("Stock", "[THREAD SendToStock] -> Starting");
+            Log.Instance.WriteLog(_logName, "[THREAD DISPACHING] -> Starting");
 
             bool hasCar = false;
+            int routeIdx = 0 ;
             int[] markHome = control._markHome;
 
             for (;;)
@@ -137,20 +140,73 @@ namespace CarServices
                         //Check stop car at Home position
                         if (car.FunctionCode == 53 && markHome.Contains(car.MarkId))
                         {
+                            
+                            if (car.OnDuty)
+                            {
+                                routeIdx = Array.IndexOf(markHome, car.MarkId);
+                                car.OnDuty = false;
+                            }
+
                             DataTable taskOrderData = DbServices.DbServices
                                 .Instance.DB_TaskOrder.GetList().Tables["ds"]
                                 .Select("endTime IS NULL", "id DESC")
                                 .CopyToDataTable();
 
                             bool flag = taskOrderData != null && taskOrderData.Rows.Count > 0;
+                            if (flag)
+                            {
+                                int[] routes = taskOrderData.Rows[0]["route"].ToString()
+                                    .Split(new[] {","}, StringSplitOptions.RemoveEmptyEntries)
+                                    .Select(int.Parse).ToArray();
+
+                                this.ReleaseCar(car.MarkId, routes[routeIdx]);
+                                car.OnDuty = true;
+                            }
+
                         }
                         else
                             continue;
                     }
                             
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
+                    var st = new StackTrace();
+                    Log.Instance.WriteLog(_logName, $"[THREAD DISPACHING] Loop Exception [{ex.StackTrace}][{st.GetFrame(0).GetFileLineNumber()}]=> {ex.Message}");
+                }
+                Thread.Sleep(250);
+            }
+        }
+
+        private void Thread_CheckPoint(CarControl control)
+        {
+            Log.Instance.WriteLog(_logName, "[THREAD DISPACHING] -> Starting");
+
+            int lastStock = 0;
+
+            for (; ; )
+            {
+                try
+                {
+                    foreach (Car car in CarDict.Values)
+                    {
+                        if (car.MarkId != car.LastMarkId)
+                        {
+                            lastStock += 1;
+                            StringBuilder sqlString = new StringBuilder();
+                            sqlString.Append($"WHERE markId='{car.MarkId}' ");
+                            sqlString.Append("AND typeStock='Trolley' ");
+
+                            DbServices.DbServices.Instance.DB_Stock.GetList(sqlString.ToString());
+                            
+                            car.LastMarkId = car.MarkId;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var st = new StackTrace();
+                    Log.Instance.WriteLog(_logName, $"[THREAD CHECKPOINT] Loop Exception [{ex.StackTrace}][{st.GetFrame(0).GetFileLineNumber()}]=> {ex.Message}");
                 }
                 Thread.Sleep(250);
             }
