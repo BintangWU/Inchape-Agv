@@ -5,13 +5,15 @@ using Inchape_Agv.Utilities;
 using DbServices;
 using System.Diagnostics;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Inchape_Agv.Views
 {
     public partial class V_Stocks : UserControl
     {
         private static DataTable dtStocks = new DataTable();
-        private int idData;
+        private List<int> idData;
+        private int selectedId;
 
         private Dictionary<string, string> headerMap = new Dictionary<string, string>
         {
@@ -38,23 +40,47 @@ namespace Inchape_Agv.Views
             btn_export.Click += Button_Click;
 
             tb_index.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
-            tb_route.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
-            tb_markId.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
-            tb_endMarkId.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
+            tb_routeIn.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
+            tb_routeOut.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
+            tb_landMark.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
+            tb_endLandMark.KeyPress += TextBoxNumeric.NumericOnly_KeyPress;
         }
 
         private void ClearForm()
         {
             tb_index.Clear();
             tb_name.Clear();
-            tb_route.Clear();
-            tb_markId.Clear();
-            tb_endMarkId.Clear();
+            tb_routeIn.Clear();
+            tb_routeOut.Clear();
+            tb_landMark.Clear();
+            tb_endLandMark.Clear();
 
-            cbo_typeStock.Text = "";
-            cbo_typeStock.SelectedIndex = -1;
             cbo_type.Text = "";
             cbo_type.SelectedIndex = -1;
+            cbo_door.Text = "";
+            cbo_door.SelectedIndex = -1;
+        }
+
+        private void LoadData()
+        {
+            DataTable dt = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
+            dtStocks.Rows.Clear();
+
+            foreach(DataRow row in dt.Rows)
+            {
+                DataRow dr = dtStocks.NewRow();
+                dr["id"] = row["id"];
+                dr["idx"] = row["idx"];
+                dr["name"] = row["name"];
+                dr["routeIn"] = row["routeIn"];
+                dr["routeOut"] = row["routeOut"];
+                dr["mark"] = row["landMark"];
+                dr["endMark"] = row["endLandMark"];
+                dr["door"] = row["door"];
+                dr["type"] = row["type"];
+                dr["code"] = row["prodNo"];
+                dtStocks.Rows.Add(dr);
+            }
         }
 
         private void Button_Click(object? sender, EventArgs e)
@@ -67,8 +93,8 @@ namespace Inchape_Agv.Views
                     switch (action)
                     {
                         case "add":
-                            bool flag1 = cbo_typeStock.SelectedItem != null;
-                            bool flag2 = cbo_type.SelectedItem != null;
+                            bool flag1 = cbo_type.SelectedItem != null;
+                            bool flag2 = cbo_door.SelectedItem != null;
 
                             if (flag1 && flag2)
                                 DataUpdate();
@@ -81,7 +107,7 @@ namespace Inchape_Agv.Views
                             break;
 
                         case "update":
-                            int id = idData;
+                            int id = selectedId;
                             DataUpdate(id);
                             break;
 
@@ -176,10 +202,11 @@ namespace Inchape_Agv.Views
                 {
                     Index = int.TryParse(tb_index.Text, out var index) ? index : 0,
                     Name = tb_name.Text.ToString(),
-                    Route = int.TryParse(tb_route.Text, out var route) ? route : 0,
-                    MarkId = int.TryParse(tb_markId.Text, out var markId) ? markId : 0,
-                    EndMarkId = int.TryParse(tb_endMarkId.Text, out var endMarkId) ? endMarkId : 0,
-                    TypeStock = cbo_typeStock.Text.ToString(),
+                    RouteIn = int.TryParse(tb_routeIn.Text, out var routeIn) ? routeIn : 0,
+                    RouteOut = int.TryParse(tb_routeOut.Text, out var routeOut) ? routeOut : 0,
+                    LandMark = int.TryParse(tb_landMark.Text, out var landMark) ? landMark : 0,
+                    EndLandMark = int.TryParse(tb_endLandMark.Text, out var endLandMark) ? endLandMark : 0,
+                    Door = cbo_door.Text.ToString(),
                     Type = cbo_type.Text.ToString()
                 };
 
@@ -187,7 +214,7 @@ namespace Inchape_Agv.Views
                 bool results;
                 if (flag)
                 {
-                    data.ID = idData;
+                    data.Id = idData;
                     results = DbServices.DbServices.Instance.DB_Stock.Update(data);
                 }
                 else
@@ -198,7 +225,8 @@ namespace Inchape_Agv.Views
                 if (results)
                 {
                     ClearForm();
-                    dtg_stocks.DataSource = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
+                    LoadData();
+                    //dtg_stocks.DataSource = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
                     dtg_stocks.Refresh();
                 }
             }
@@ -208,7 +236,21 @@ namespace Inchape_Agv.Views
 
         private void V_Stocks_Load(object sender, EventArgs e)
         {
-            dtg_stocks.DataSource = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
+            if (dtStocks.Columns.Count == 0)
+            {
+                dtStocks.Columns.Add("id", typeof(int));
+                dtStocks.Columns.Add("idx", typeof(int));
+                dtStocks.Columns.Add("name", typeof(string));
+                dtStocks.Columns.Add("routeIn", typeof(int));
+                dtStocks.Columns.Add("routeOut", typeof(int));
+                dtStocks.Columns.Add("mark", typeof(int));
+                dtStocks.Columns.Add("endMark", typeof(int));
+                dtStocks.Columns.Add("door", typeof(string));
+                dtStocks.Columns.Add("type", typeof(string));
+                dtStocks.Columns.Add("code", typeof(string));
+            }
+            dtg_stocks.DataSource = dtStocks;
+            LoadData();
             dtg_stocks.Refresh();
         }
 
@@ -216,18 +258,21 @@ namespace Inchape_Agv.Views
         {
             try
             {
-                idData = Convert.ToInt32(dtg_stocks.Rows[e.RowIndex].Cells["id"].Value);
-                //tb_index.Text = dtg_stocks.Rows[e.RowIndex].Cells["index"].Value.ToString();
+                selectedId = Convert.ToInt32(dtg_stocks.Rows[e.RowIndex].Cells["id"].Value);
+
+                tb_index.Text = dtg_stocks.Rows[e.RowIndex].Cells["idx"].Value.ToString();
                 tb_name.Text = dtg_stocks.Rows[e.RowIndex].Cells["name"].Value.ToString();
-                tb_route.Text = dtg_stocks.Rows[e.RowIndex].Cells["route"].Value.ToString();
-                tb_markId.Text = dtg_stocks.Rows[e.RowIndex].Cells["markId"].Value.ToString();
-                tb_endMarkId.Text = dtg_stocks.Rows[e.RowIndex].Cells["endMarkId"].Value.ToString();
-                cbo_typeStock.Text = dtg_stocks.Rows[e.RowIndex].Cells["typeStock"].Value.ToString();
+                tb_routeIn.Text = dtg_stocks.Rows[e.RowIndex].Cells["routeIn"].Value.ToString();
+                tb_routeOut.Text = dtg_stocks.Rows[e.RowIndex].Cells["routeOut"].Value.ToString();
+                tb_landMark.Text = dtg_stocks.Rows[e.RowIndex].Cells["mark"].Value.ToString();
+                tb_endLandMark.Text = dtg_stocks.Rows[e.RowIndex].Cells["endMark"].Value.ToString();
+
+                cbo_door.Text = dtg_stocks.Rows[e.RowIndex].Cells["door"].Value.ToString();
                 cbo_type.Text = dtg_stocks.Rows[e.RowIndex].Cells["type"].Value.ToString();
 
                 if (dtg_stocks.Columns[e.ColumnIndex].Name == "delete")
                 {
-                    int id = idData;
+                    int id = selectedId;
                     DialogResult dialog = MessageBox.Show($"Do you want to delete STOCK:[{id}] [{tb_name.Text}] from database?", "Information", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dialog == DialogResult.Yes)
                     {
@@ -235,13 +280,16 @@ namespace Inchape_Agv.Views
                         if (flag)
                         {
                             ClearForm();
-                            dtg_stocks.DataSource = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
+                            LoadData();
                             dtg_stocks.Refresh();
                         }
                     }
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);    
+            }
         }
     }
 }

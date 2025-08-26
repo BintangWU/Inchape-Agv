@@ -1,4 +1,5 @@
 ﻿using DbServices.Models;
+using Microsoft.Extensions.Primitives;
 using System.Data;
 using System.Data.SQLite;
 using System.Text;
@@ -12,18 +13,19 @@ namespace DbServices.Fuctions
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"INSERT INTO {_db} ");
-            sqlString.Append("(idx, name, route, markId, endMarkId, typeStock, type) ");
+            sqlString.Append("(idx, name, routeIn, routeOut, landMark, endLandMark, door, type) ");
             sqlString.Append("VALUES ");
-            sqlString.Append("(@Index, @Name, @Route, @MarkId, @EndMarkId, @TypeStock, @Type)");
+            sqlString.Append("(@Index, @Name, @RouteIn, @RouteOut, @LandMark, @EndLandMark, @Door, @Type)");
 
             SQLiteParameter[] parameters = new SQLiteParameter[]
             {
                 new SQLiteParameter("@Index", model.Index),
                 new SQLiteParameter("@Name", model.Name),
-                new SQLiteParameter("@Route", model.Route),
-                new SQLiteParameter("@MarkId", model.MarkId),
-                new SQLiteParameter("@EndMarkId", model.EndMarkId),
-                new SQLiteParameter("@TypeStock", model.TypeStock),
+                new SQLiteParameter("@RouteIn", model.RouteIn),
+                new SQLiteParameter("@RouteOut", model.RouteOut),
+                new SQLiteParameter("@LandMark", model.LandMark),
+                new SQLiteParameter("@EndLandMark", model.EndLandMark),
+                new SQLiteParameter("@Door", model.Door),
                 new SQLiteParameter("@Type", model.Type)
             };
 
@@ -44,22 +46,23 @@ namespace DbServices.Fuctions
             sqlString.Append($"UPDATE {_db} SET ");
             sqlString.Append("idx= @Index, " +
                 "name= @Name, " +
-                "route= @Route, " +
-                "markId= @MarkId, " +
-                "endMarkId= @EndMarkId, " +
-                "typeStock= @TypeStock, " +
+                "routeIn= @RouteIn, " +
+                "routeOut= @RouteOut, " +
+                "landMark= @LandMark, " +
+                "endLandMark= @EndLandMark, " +
+                "door= @Door, " +
                 "type= @Type ");
             sqlString.Append("WHERE id= @Id");
 
             SQLiteParameter[] parameters = new SQLiteParameter[]
             {
-                new SQLiteParameter("@Id", model.ID),
                 new SQLiteParameter("@Index", model.Index),
                 new SQLiteParameter("@Name", model.Name),
-                new SQLiteParameter("@Route", model.Route),
-                new SQLiteParameter("@MarkId", model.MarkId),
-                new SQLiteParameter("@EndMarkId", model.EndMarkId),
-                new SQLiteParameter("@TypeStock", model.TypeStock),
+                new SQLiteParameter("@RouteIn", model.RouteIn),
+                new SQLiteParameter("@RouteOut", model.RouteOut),
+                new SQLiteParameter("@LandMark", model.LandMark),
+                new SQLiteParameter("@EndLandMark", model.EndLandMark),
+                new SQLiteParameter("@Door", model.Door),
                 new SQLiteParameter("@Type", model.Type)
             };
 
@@ -120,15 +123,15 @@ namespace DbServices.Fuctions
             bool flag = row != null;
             if (flag)
             {
-                model.ID = int.TryParse(row["id"].ToString(), out var id) ? id : 0; 
+                model.Id = int.TryParse(row["id"].ToString(), out var id) ? id : 0; 
                 model.Index = int.TryParse(row["idx"].ToString(), out var index) ? index : 0;
                 model.Name = row["name"] == DBNull.Value ? "" : row["name"]?.ToString() ?? "";
-                model.Route = int.TryParse(row["route"].ToString(), out var route) ? route : 0;
-                model.MarkId = int.TryParse(row["markId"].ToString(), out var markId) ? markId : 0;     
-                model.EndMarkId = int.TryParse(row["endMarkId"].ToString(), out var endMarkId) ? endMarkId : 0;
-                model.TypeStock = row["typeStock"] == DBNull.Value ? "" : row["typeStock"]?.ToString() ?? "";
+                model.RouteIn = int.TryParse(row["routeIn"].ToString(), out var routeIn) ? routeIn : 0;
+                model.RouteOut = int.TryParse(row["routeIn"].ToString(), out var routeOut) ? routeOut : 0;
+                model.LandMark = int.TryParse(row["landMark"].ToString(), out var landMark) ? landMark : 0;     
+                model.EndLandMark = int.TryParse(row["endLandMark"].ToString(), out var endLandMark) ? endLandMark : 0;
+                model.Door = row["door"] == DBNull.Value ? "" : row["door"]?.ToString() ?? "";
                 model.Type = row["type"] == DBNull.Value ? "" : row["type"]?.ToString() ?? "";
-                model.Status = row["status"] == DBNull.Value ? "" : row["status"]?.ToString() ?? "";
                 model.ProdNo = row["prodNo"] == DBNull.Value ? "" : row["prodNo"]?.ToString() ?? "";
             }
             return model;

@@ -103,24 +103,24 @@ namespace CarServices
         }
 
 
-        public List<(int Route, int MarkId)> GenTask(DataTable data)
-        {
-            if (data?.Rows == null || data.Rows.Count == 0)
-                return new List<(int Route, int MarkId)>();
+        //public List<(int Route, int MarkId)> GenTask(DataTable data)
+        //{
+        //    if (data?.Rows == null || data.Rows.Count == 0)
+        //        return new List<(int Route, int MarkId)>();
 
-            return data.Rows.Cast<DataRow>().Select(row =>
-            {
-                try
-                {
-                    var temp = DbServices.DbServices.Instance.DB_Stock.ToModel(row);
-                    return (temp.Route, temp.MarkId);
-                }
-                catch
-                {
-                    return default;
-                }
-            }).Where(x => x != default).ToList();
-        }
+        //    return data.Rows.Cast<DataRow>().Select(row =>
+        //    {
+        //        try
+        //        {
+        //            var temp = DbServices.DbServices.Instance.DB_Stock.ToModel(row);
+        //            //return (temp.Route, temp.MarkId);
+        //        }
+        //        catch
+        //        {
+        //            return default;
+        //        }
+        //    }).Where(x => x != default).ToList();
+        //}
 
 
         private void Thread_DispatchingCar(CarControl control)

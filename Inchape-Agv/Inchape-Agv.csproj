@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Database-old.db" />
     <None Remove="Resources\Logo.ico" />
     <None Remove="Resources\Logo.png" />
   </ItemGroup>

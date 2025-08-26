@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,18 +11,17 @@ namespace DbServices.Models
     public class DBM_Stock
     {
         private int _id;
-        private int _idx;
-        private string? _name;
-        private int _route;
-        private int _markId;
-        private int _endMarkId;
-        private string? _typeStock;
-        private string? _type;
-        private string? _status;
-        private string? _prodNo;
+        private int _index;
+        private string _name;
+        private int _routeIn;
+        private int _routeOut;
+        private int _landMark;
+        private int _endlandMark;
+        private string _door;
+        private string _type;
+        private string _prodNo;
 
-
-        public int ID
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
@@ -29,57 +29,56 @@ namespace DbServices.Models
 
         public int Index
         {
-            get { return _idx; }
-            set { _idx = value; }
+            get { return _index; }
+            set { _index = value; }
         }
-        
+
         public string Name
         {
             get { return _name; }
             set { _name = value; }
         }
 
-
-        public int Route
+        public int RouteIn
         {
-            get { return _route; }
-            set { _route = value; }
+            get { return _routeIn; }
+            set { _routeIn = value; }
         }
 
-        public int MarkId
+        public int RouteOut
         {
-            get { return _markId; }
-            set { _markId = value; }
+            get { return _routeOut; }
+            set { _routeOut = value; }
         }
 
-        public int EndMarkId
+        public int LandMark
         {
-            get { return _endMarkId; }
-            set { _endMarkId = value; }
+            get { return _landMark; }
+            set { _landMark = value; }
         }
 
-        public string TypeStock
+        public int EndLandMark
         {
-            get { return _typeStock; }
-            set { _typeStock = value; }
+            get { return _endlandMark; }
+            set { _endlandMark = value; }
         }
 
-        public string Status
+        public string Door
         {
-            get { return _status; }
-            set { _status = value; }
-        }
-
-        public string ProdNo
-        {
-            get { return _prodNo; }
-            set { _prodNo = value; }
+            get { return _door; }
+            set { _door = value; }
         }
 
         public string Type
         {
             get { return _type; }
             set { _type = value; }
+        }
+
+        public string ProdNo
+        {
+            get { return _prodNo; }
+            set { _prodNo = value; }
         }
     }
 }
