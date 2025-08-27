@@ -2,6 +2,7 @@
 using System.Data;
 using System.Data.SQLite;
 using System.Text;
+using System.Windows.Controls;
 
 namespace DbServices.Fuctions
 {
@@ -13,16 +14,17 @@ namespace DbServices.Fuctions
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"INSERT INTO {_db} ");
-            sqlString.Append("(prodNo, status, destination, route, startTime) ");
-            sqlString.Append("VALUES (@ProdNo, @Status, @Destination, @Route, @StartTime) ");
+            sqlString.Append("(prodNo, callType, destination, routes, status, createAt) ");
+            sqlString.Append("VALUES (@ProdNo, @CallType, @Destination, @Routes, @Status, @CreateAt) ");
 
             SQLiteParameter[] parameters = new SQLiteParameter[]
             {
                 new SQLiteParameter("@ProdNo", model.ProdNo),
-                new SQLiteParameter("@Status", model.Status),
+                new SQLiteParameter("@CallType", model.CallType),
                 new SQLiteParameter("@Destination", model.Destination),
-                new SQLiteParameter("@Route", model.Route),
-                new SQLiteParameter("@StartTime", model.StartTime)
+                new SQLiteParameter("@Routes", model.Routes),
+                new SQLiteParameter("@Status", model.Status),
+                new SQLiteParameter("@CreateAt", model.CreateAt)
             };
 
             object obj = DbHelper.GetSingle(sqlString.ToString(), parameters);
@@ -33,20 +35,20 @@ namespace DbServices.Fuctions
                 results = 0;
             else
                 results = Convert.ToInt32(obj);
-            return results; 
+            return results;
         }
 
         public bool Update(DBM_TaskOrder model) //Update TaskOrder by ProdNo
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"UPDATE {_db} SET ");
-            sqlString.Append("endTime= @EndTime ");
+            sqlString.Append("status= @Status ");
             sqlString.Append("WHERE prodNo= @ProdNo ");
 
             SQLiteParameter[] parameters = new SQLiteParameter[]
             {
                 new SQLiteParameter("@ProdNo", model.ProdNo),
-                new SQLiteParameter("EndTime", model.EndTime)
+                new SQLiteParameter("@Status", model.Status)
             };
 
             int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);
@@ -59,6 +61,42 @@ namespace DbServices.Fuctions
             sqlString.Append("SELECT * ");
             sqlString.Append($"FROM {_db} ");
             return DbHelper.DataQuery(sqlString.ToString());
+        }
+
+        public DataSet GetOnQueue(string prodNo, string callType)
+        {
+            StringBuilder sqlString = new StringBuilder();
+            sqlString.Append("SELECT * ");
+            sqlString.Append($"FROM {_db} ");
+            sqlString.Append("WHERE status= 'Queue' AND ");
+            sqlString.Append("prodNo= @ProdNo AND ");
+            sqlString.Append("callType= @CallType ");
+            sqlString.Append("ORDER BY id DESC ");
+
+            SQLiteParameter[] parameters = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@ProdNo", prodNo),
+                new SQLiteParameter("@CallType", callType)
+            };
+
+            return DbHelper.DataQuery(sqlString.ToString(), parameters);
+        }
+
+        public DBM_TaskOrder ToModel(DataRow row)
+        {
+            DBM_TaskOrder model = new DBM_TaskOrder();
+            bool flag = row != null;
+            if (flag)
+            {
+                model.Id = int.TryParse(row["id"].ToString(), out var id) ? id : 0;
+                model.ProdNo = row["prodNo"] == DBNull.Value ? "" : row["prodNo"]?.ToString() ?? "";
+                model.CallType = row["callType"] == DBNull.Value ? "" : row["callType"]?.ToString() ?? "";
+                model.Destination = row["destination"] == DBNull.Value ? "" : row["destination"]?.ToString() ?? "";
+                model.Routes = row["routes"] == DBNull.Value ? "" : row["routes"]?.ToString() ?? "";
+                model.Status = row["status"] == DBNull.Value ? "" : row["status"]?.ToString() ?? "";
+                model.CreateAt = row["createAt"] == DBNull.Value ? "" : row["createAt"]?.ToString() ?? "";  
+            }
+            return model;
         }
     }
 }

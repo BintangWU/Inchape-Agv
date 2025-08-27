@@ -14,17 +14,18 @@ namespace DbServices.Fuctions
             string[] stockListname = new string[2];
             int[] route = new int[2];
 
-            DataTable data = DbServices.Instance.DB_Stock.GetList("WHERE (prodNo IS NULL OR prodNo='-' OR prodNo='') " +
-            "AND typeStock= 'FG' " +
-            "AND type IN ('LH', 'RH') " +
-            "ORDER BY idx ASC, type ASC LIMIT 2").Tables["ds"];
+            string sqlString = "WHERE (prodNo IS NULL OR prodNo='-' OR prodNo='') " +
+                "AND type= 'FG' " +
+                "AND door IN ('LH', 'RH') " +
+                "ORDER BY idx ASC, type ASC LIMIT 2";
 
+            DataTable data = DbServices.Instance.DB_Stock.GetList(sqlString.ToString()).Tables["ds"];
             if (data != null && data.Rows.Count == 2)
             {
                 for (int i = 0; i < data.Rows.Count; i++)
                 {
                     stockListname[i] = data.Rows[i]["name"].ToString();
-                    route[i] = int.TryParse(data.Rows[i]["route"].ToString(), out var routeId) ? routeId : 0;
+                    route[i] = int.TryParse(data.Rows[i]["routeIn"].ToString(), out var routeId) ? routeId : 0;
                 }
 
                 if (stockListname[0].ToUpper() == stockListname[1].ToUpper())
@@ -33,11 +34,11 @@ namespace DbServices.Fuctions
                     DBM_TaskOrder taskOrder = new DBM_TaskOrder()
                     {
                         ProdNo = prodNo.ToString(),
-                        Status = "Inbound",
-                        StatusTask = "Queue",    
+                        CallType = "Inbound",
                         Destination = stockName.ToString(),
-                        Route = string.Join(",", route),
-                        StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                        Routes = string.Join(",", route),
+                        Status = "Queue",
+                        CreateAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                     };
 
                     bool flag = DbServices.Instance.DB_Stock.Update(stockName, prodNo);
@@ -85,7 +86,7 @@ namespace DbServices.Fuctions
             sqlString.Append("SELECT * ");
             sqlString.Append($"FROM db_stocks ");
             sqlString.Append("WHERE prodNo= @ProdNo ");
-            sqlString.Append("AND typeStock= 'FG' AND type IN ('LH', 'RH') ");
+            sqlString.Append("AND type= 'FG' AND door IN ('LH', 'RH') ");
             sqlString.Append("ORDER BY idx ASC, type ASC LIMIT 2");
 
             SQLiteParameter[] parameters =
@@ -108,11 +109,11 @@ namespace DbServices.Fuctions
                     DBM_TaskOrder taskOrder = new DBM_TaskOrder()
                     {
                         ProdNo = prodNo.ToString(),
-                        Status = "Outbound",
-                        StatusTask = "Queue",
+                        CallType = "Outbound",
                         Destination = stockName.ToString(),
-                        Route = string.Join(",", route),
-                        StartTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
+                        Routes = string.Join(",", route),
+                        Status = "Queue",
+                        CreateAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                     };
 
                     bool flag = DbServices.Instance.DB_Stock.Update(stockName, prodNo);

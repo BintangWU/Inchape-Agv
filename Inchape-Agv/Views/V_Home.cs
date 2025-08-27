@@ -52,10 +52,10 @@ namespace Inchape_Agv.Views
                         case "test":
                             DataTable taskOrderData = DbServices.DbServices
                                 .Instance.DB_TaskOrder.GetList().Tables["ds"]
-                                .Select("endTime IS NULL")
+                                .Select("status='Queue'", "id DESC")
                                 .CopyToDataTable();
 
-                            int[] routes = taskOrderData.Rows[0]["route"].ToString()
+                            int[] routes = taskOrderData.Rows[0]["routes"].ToString()
                                     .Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries)
                                     .Select(int.Parse).ToArray();
                             

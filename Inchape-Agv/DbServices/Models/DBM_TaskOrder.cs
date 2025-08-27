@@ -11,16 +11,14 @@ namespace DbServices.Models
     {
         private int _id;
         private string? _prodNo;
-        private string? _status;
+        private string? _callType;  
         private string? _destination;
-        private string? _route;
-        private string? _statusTask;
-        private string? _statusLH;
-        private string? _statusRH;
-        private string? _startTime;
-        private string? _endTime;
+        private string? _routes;
+        private string? _status;
+        private string? _createAt;
         
-        public int ID
+
+        public int Id
         {
             get { return _id; }
             set { _id = value; }
@@ -32,28 +30,10 @@ namespace DbServices.Models
             set { _prodNo = value; }
         }
 
-        public string Status
+        public string CallType
         {
-            get { return _status; }
-            set { _status = value; }
-        }
-
-        public string StatusTask
-        {
-            get { return _statusTask; }
-            set { _statusTask = value; }
-        }
-
-        public string StatusLH
-        {
-            get { return _statusLH; }
-            set { _statusLH = value; }
-        }   
-
-        public string StatusRH
-        {
-            get { return _statusRH; }
-            set { _statusRH = value; }
+            get { return _callType; }
+            set { _callType = value; }
         }
 
         public string Destination
@@ -62,22 +42,22 @@ namespace DbServices.Models
             set { _destination = value; }
         }
 
-        public string Route
+        public string Routes
         {
-            get { return _route; }
-            set { _route = value; }
+            get { return _routes; }
+            set { _routes = value; }
         }
 
-        public string StartTime
+        public string Status
         {
-            get { return _startTime; }
-            set { _startTime = value; }
+            get { return _status; }
+            set { _status = value; }
         }
 
-        public string EndTime
+        public string CreateAt
         {
-            get { return _endTime; }
-            set { _endTime = value; }
+            get { return _createAt; }
+            set { _createAt = value; }
         }
     }
 }

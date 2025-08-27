@@ -56,6 +56,7 @@ namespace DbServices.Fuctions
 
             SQLiteParameter[] parameters = new SQLiteParameter[]
             {
+                new SQLiteParameter("@Id", model.Id),  
                 new SQLiteParameter("@Index", model.Index),
                 new SQLiteParameter("@Name", model.Name),
                 new SQLiteParameter("@RouteIn", model.RouteIn),
@@ -72,7 +73,6 @@ namespace DbServices.Fuctions
 
         public bool Update(string stockName, string prodNo)
         {
-            //UPDATE db_stocks SET prodNo = "hioho" WHERE name = "StockA"
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"UPDATE {_db} SET ");
             sqlString.Append("prodNo= @ProdNo ");

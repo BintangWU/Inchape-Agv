@@ -12,17 +12,19 @@ namespace Inchape_Agv.Views
     public partial class V_Stocks : UserControl
     {
         private static DataTable dtStocks = new DataTable();
-        private List<int> idData;
         private int selectedId;
 
         private Dictionary<string, string> headerMap = new Dictionary<string, string>
         {
+            { "idx", "IDX" },
             { "name", "NAME" },
-            { "route", "ROUTE" },
-            { "markId", "MARK" },
-            { "endMarkId", "END MARK" },
-            { "typeStock", "STOCK" },
-            { "type", "TYPE" }
+            { "routeIn", "ROUTE_IN" },
+            { "routeOut", "ROUTE_OUT" },
+            { "landMark", "MARK" },
+            { "endLandMark", "END_MARK" },
+            { "door", "DOOR" },
+            { "type", "TYPE" },
+            { "prodNo", "CODE" }
         };
 
         public V_Stocks()
@@ -108,6 +110,7 @@ namespace Inchape_Agv.Views
 
                         case "update":
                             int id = selectedId;
+                            Debug.WriteLine($"Update ID: {id}");
                             DataUpdate(id);
                             break;
 
@@ -166,7 +169,10 @@ namespace Inchape_Agv.Views
                         FileOperations.ExportCSV(headerMap, dt, saveDialog.FileName);
                         MessageBox.Show("Export complete.");
                     }
-                    catch (Exception ex) { }
+                    catch (Exception ex) 
+                    {
+                        Debug.WriteLine(ex.Message);
+                    }
                 }
             }
         }
@@ -230,7 +236,10 @@ namespace Inchape_Agv.Views
                     dtg_stocks.Refresh();
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
 
         }
 

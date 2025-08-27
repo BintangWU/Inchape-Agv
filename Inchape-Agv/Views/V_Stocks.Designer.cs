@@ -36,6 +36,17 @@
             label5 = new Label();
             label6 = new Label();
             dtg_stocks = new DataGridView();
+            id = new DataGridViewTextBoxColumn();
+            idx = new DataGridViewTextBoxColumn();
+            name = new DataGridViewTextBoxColumn();
+            routeIn = new DataGridViewTextBoxColumn();
+            routeOut = new DataGridViewTextBoxColumn();
+            mark = new DataGridViewTextBoxColumn();
+            endMark = new DataGridViewTextBoxColumn();
+            door = new DataGridViewTextBoxColumn();
+            type = new DataGridViewTextBoxColumn();
+            code = new DataGridViewTextBoxColumn();
+            delete = new DataGridViewLinkColumn();
             btn_add = new FontAwesome.Sharp.IconButton();
             tb_name = new TextBox();
             tb_routeIn = new TextBox();
@@ -52,17 +63,6 @@
             tb_index = new TextBox();
             label8 = new Label();
             tb_routeOut = new TextBox();
-            id = new DataGridViewTextBoxColumn();
-            idx = new DataGridViewTextBoxColumn();
-            name = new DataGridViewTextBoxColumn();
-            routeIn = new DataGridViewTextBoxColumn();
-            routeOut = new DataGridViewTextBoxColumn();
-            mark = new DataGridViewTextBoxColumn();
-            endMark = new DataGridViewTextBoxColumn();
-            door = new DataGridViewTextBoxColumn();
-            type = new DataGridViewTextBoxColumn();
-            code = new DataGridViewTextBoxColumn();
-            delete = new DataGridViewLinkColumn();
             ((System.ComponentModel.ISupportInitialize)dtg_stocks).BeginInit();
             SuspendLayout();
             // 
@@ -158,209 +158,6 @@
             dtg_stocks.Size = new Size(930, 414);
             dtg_stocks.TabIndex = 20;
             dtg_stocks.CellClick += dtg_stocks_CellClick;
-            // 
-            // btn_add
-            // 
-            btn_add.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_add.Cursor = Cursors.Hand;
-            btn_add.Font = new Font("Consolas", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_add.IconChar = FontAwesome.Sharp.IconChar.PlusSquare;
-            btn_add.IconColor = Color.Black;
-            btn_add.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btn_add.IconSize = 24;
-            btn_add.Location = new Point(622, 9);
-            btn_add.Margin = new Padding(3, 10, 3, 3);
-            btn_add.Name = "btn_add";
-            btn_add.Padding = new Padding(0, 5, 0, 0);
-            btn_add.Size = new Size(75, 58);
-            btn_add.TabIndex = 21;
-            btn_add.Text = "ADD";
-            btn_add.TextImageRelation = TextImageRelation.ImageAboveText;
-            btn_add.UseVisualStyleBackColor = true;
-            // 
-            // tb_name
-            // 
-            tb_name.BorderStyle = BorderStyle.FixedSingle;
-            tb_name.Font = new Font("Consolas", 11.25F);
-            tb_name.Location = new Point(245, 8);
-            tb_name.Margin = new Padding(3, 10, 3, 3);
-            tb_name.Name = "tb_name";
-            tb_name.Size = new Size(100, 25);
-            tb_name.TabIndex = 22;
-            // 
-            // tb_routeIn
-            // 
-            tb_routeIn.BorderStyle = BorderStyle.FixedSingle;
-            tb_routeIn.Font = new Font("Consolas", 11.25F);
-            tb_routeIn.Location = new Point(96, 42);
-            tb_routeIn.Margin = new Padding(3, 10, 3, 3);
-            tb_routeIn.Name = "tb_routeIn";
-            tb_routeIn.Size = new Size(53, 25);
-            tb_routeIn.TabIndex = 23;
-            // 
-            // tb_endLandMark
-            // 
-            tb_endLandMark.BorderStyle = BorderStyle.FixedSingle;
-            tb_endLandMark.Font = new Font("Consolas", 11.25F);
-            tb_endLandMark.Location = new Point(245, 78);
-            tb_endLandMark.Margin = new Padding(3, 10, 3, 3);
-            tb_endLandMark.Name = "tb_endLandMark";
-            tb_endLandMark.Size = new Size(53, 25);
-            tb_endLandMark.TabIndex = 25;
-            // 
-            // tb_landMark
-            // 
-            tb_landMark.BorderStyle = BorderStyle.FixedSingle;
-            tb_landMark.Font = new Font("Consolas", 11.25F);
-            tb_landMark.Location = new Point(245, 42);
-            tb_landMark.Margin = new Padding(3, 10, 3, 3);
-            tb_landMark.Name = "tb_landMark";
-            tb_landMark.Size = new Size(53, 25);
-            tb_landMark.TabIndex = 24;
-            // 
-            // cbo_door
-            // 
-            cbo_door.Font = new Font("Consolas", 11.25F);
-            cbo_door.FormattingEnabled = true;
-            cbo_door.Items.AddRange(new object[] { "LH", "RH" });
-            cbo_door.Location = new Point(415, 8);
-            cbo_door.Margin = new Padding(3, 10, 3, 3);
-            cbo_door.Name = "cbo_door";
-            cbo_door.Size = new Size(72, 26);
-            cbo_door.TabIndex = 26;
-            // 
-            // btn_update
-            // 
-            btn_update.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_update.Cursor = Cursors.Hand;
-            btn_update.Font = new Font("Consolas", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_update.IconChar = FontAwesome.Sharp.IconChar.Pencil;
-            btn_update.IconColor = Color.Black;
-            btn_update.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btn_update.IconSize = 24;
-            btn_update.Location = new Point(703, 9);
-            btn_update.Margin = new Padding(3, 10, 3, 3);
-            btn_update.Name = "btn_update";
-            btn_update.Padding = new Padding(0, 5, 0, 0);
-            btn_update.Size = new Size(75, 58);
-            btn_update.TabIndex = 27;
-            btn_update.Text = "UPDATE";
-            btn_update.TextImageRelation = TextImageRelation.ImageAboveText;
-            btn_update.UseVisualStyleBackColor = true;
-            // 
-            // label3
-            // 
-            label3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label3.AutoSize = true;
-            label3.Font = new Font("Consolas", 11.25F);
-            label3.Location = new Point(358, 46);
-            label3.Margin = new Padding(10, 10, 0, 0);
-            label3.Name = "label3";
-            label3.Size = new Size(48, 18);
-            label3.TabIndex = 28;
-            label3.Text = "Type:";
-            // 
-            // cbo_type
-            // 
-            cbo_type.Font = new Font("Consolas", 11.25F);
-            cbo_type.FormattingEnabled = true;
-            cbo_type.Items.AddRange(new object[] { "FG", "Trolley " });
-            cbo_type.Location = new Point(415, 42);
-            cbo_type.Margin = new Padding(3, 10, 3, 3);
-            cbo_type.Name = "cbo_type";
-            cbo_type.Size = new Size(72, 26);
-            cbo_type.TabIndex = 29;
-            // 
-            // btn_import
-            // 
-            btn_import.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_import.Cursor = Cursors.Hand;
-            btn_import.Font = new Font("Consolas", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_import.IconChar = FontAwesome.Sharp.IconChar.ArrowDown;
-            btn_import.IconColor = Color.Black;
-            btn_import.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btn_import.IconSize = 24;
-            btn_import.Location = new Point(784, 9);
-            btn_import.Margin = new Padding(3, 10, 3, 3);
-            btn_import.Name = "btn_import";
-            btn_import.Padding = new Padding(0, 5, 0, 0);
-            btn_import.Size = new Size(75, 58);
-            btn_import.TabIndex = 30;
-            btn_import.Text = "IMPORT";
-            btn_import.TextImageRelation = TextImageRelation.ImageAboveText;
-            btn_import.UseVisualStyleBackColor = true;
-            // 
-            // linkLabel1
-            // 
-            linkLabel1.AutoSize = true;
-            linkLabel1.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            linkLabel1.Location = new Point(13, 76);
-            linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(0, 15);
-            linkLabel1.TabIndex = 31;
-            // 
-            // btn_export
-            // 
-            btn_export.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btn_export.Cursor = Cursors.Hand;
-            btn_export.Font = new Font("Consolas", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_export.IconChar = FontAwesome.Sharp.IconChar.ArrowUp;
-            btn_export.IconColor = Color.Black;
-            btn_export.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btn_export.IconSize = 24;
-            btn_export.Location = new Point(865, 9);
-            btn_export.Margin = new Padding(3, 10, 3, 3);
-            btn_export.Name = "btn_export";
-            btn_export.Padding = new Padding(0, 5, 0, 0);
-            btn_export.Size = new Size(75, 58);
-            btn_export.TabIndex = 32;
-            btn_export.Text = "EXPORT";
-            btn_export.TextImageRelation = TextImageRelation.ImageAboveText;
-            btn_export.UseVisualStyleBackColor = true;
-            // 
-            // label7
-            // 
-            label7.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label7.AutoSize = true;
-            label7.Font = new Font("Consolas", 11.25F);
-            label7.Location = new Point(10, 10);
-            label7.Margin = new Padding(10, 10, 0, 0);
-            label7.Name = "label7";
-            label7.Size = new Size(40, 18);
-            label7.TabIndex = 33;
-            label7.Text = "Idx:";
-            // 
-            // tb_index
-            // 
-            tb_index.BorderStyle = BorderStyle.FixedSingle;
-            tb_index.Font = new Font("Consolas", 11.25F);
-            tb_index.Location = new Point(96, 8);
-            tb_index.Margin = new Padding(3, 10, 3, 3);
-            tb_index.Name = "tb_index";
-            tb_index.Size = new Size(53, 25);
-            tb_index.TabIndex = 34;
-            // 
-            // label8
-            // 
-            label8.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            label8.AutoSize = true;
-            label8.Font = new Font("Consolas", 11.25F);
-            label8.Location = new Point(10, 80);
-            label8.Margin = new Padding(10, 10, 0, 0);
-            label8.Name = "label8";
-            label8.Size = new Size(88, 18);
-            label8.TabIndex = 35;
-            label8.Text = "Route Out:";
-            // 
-            // tb_routeOut
-            // 
-            tb_routeOut.BorderStyle = BorderStyle.FixedSingle;
-            tb_routeOut.Font = new Font("Consolas", 11.25F);
-            tb_routeOut.Location = new Point(96, 76);
-            tb_routeOut.Margin = new Padding(3, 10, 3, 3);
-            tb_routeOut.Name = "tb_routeOut";
-            tb_routeOut.Size = new Size(53, 25);
-            tb_routeOut.TabIndex = 36;
             // 
             // id
             // 
@@ -470,6 +267,209 @@
             delete.UseColumnTextForLinkValue = true;
             delete.VisitedLinkColor = Color.Blue;
             delete.Width = 75;
+            // 
+            // btn_add
+            // 
+            btn_add.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btn_add.Cursor = Cursors.Hand;
+            btn_add.Font = new Font("Consolas", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_add.IconChar = FontAwesome.Sharp.IconChar.PlusSquare;
+            btn_add.IconColor = Color.Black;
+            btn_add.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btn_add.IconSize = 24;
+            btn_add.Location = new Point(622, 9);
+            btn_add.Margin = new Padding(3, 10, 3, 3);
+            btn_add.Name = "btn_add";
+            btn_add.Padding = new Padding(0, 5, 0, 0);
+            btn_add.Size = new Size(75, 58);
+            btn_add.TabIndex = 9;
+            btn_add.Text = "ADD";
+            btn_add.TextImageRelation = TextImageRelation.ImageAboveText;
+            btn_add.UseVisualStyleBackColor = true;
+            // 
+            // tb_name
+            // 
+            tb_name.BorderStyle = BorderStyle.FixedSingle;
+            tb_name.Font = new Font("Consolas", 11.25F);
+            tb_name.Location = new Point(245, 8);
+            tb_name.Margin = new Padding(3, 10, 3, 3);
+            tb_name.Name = "tb_name";
+            tb_name.Size = new Size(100, 25);
+            tb_name.TabIndex = 2;
+            // 
+            // tb_routeIn
+            // 
+            tb_routeIn.BorderStyle = BorderStyle.FixedSingle;
+            tb_routeIn.Font = new Font("Consolas", 11.25F);
+            tb_routeIn.Location = new Point(96, 42);
+            tb_routeIn.Margin = new Padding(3, 10, 3, 3);
+            tb_routeIn.Name = "tb_routeIn";
+            tb_routeIn.Size = new Size(53, 25);
+            tb_routeIn.TabIndex = 4;
+            // 
+            // tb_endLandMark
+            // 
+            tb_endLandMark.BorderStyle = BorderStyle.FixedSingle;
+            tb_endLandMark.Font = new Font("Consolas", 11.25F);
+            tb_endLandMark.Location = new Point(245, 78);
+            tb_endLandMark.Margin = new Padding(3, 10, 3, 3);
+            tb_endLandMark.Name = "tb_endLandMark";
+            tb_endLandMark.Size = new Size(53, 25);
+            tb_endLandMark.TabIndex = 8;
+            // 
+            // tb_landMark
+            // 
+            tb_landMark.BorderStyle = BorderStyle.FixedSingle;
+            tb_landMark.Font = new Font("Consolas", 11.25F);
+            tb_landMark.Location = new Point(245, 42);
+            tb_landMark.Margin = new Padding(3, 10, 3, 3);
+            tb_landMark.Name = "tb_landMark";
+            tb_landMark.Size = new Size(53, 25);
+            tb_landMark.TabIndex = 5;
+            // 
+            // cbo_door
+            // 
+            cbo_door.Font = new Font("Consolas", 11.25F);
+            cbo_door.FormattingEnabled = true;
+            cbo_door.Items.AddRange(new object[] { "LH", "RH" });
+            cbo_door.Location = new Point(415, 8);
+            cbo_door.Margin = new Padding(3, 10, 3, 3);
+            cbo_door.Name = "cbo_door";
+            cbo_door.Size = new Size(72, 26);
+            cbo_door.TabIndex = 3;
+            // 
+            // btn_update
+            // 
+            btn_update.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btn_update.Cursor = Cursors.Hand;
+            btn_update.Font = new Font("Consolas", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_update.IconChar = FontAwesome.Sharp.IconChar.Pencil;
+            btn_update.IconColor = Color.Black;
+            btn_update.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btn_update.IconSize = 24;
+            btn_update.Location = new Point(703, 9);
+            btn_update.Margin = new Padding(3, 10, 3, 3);
+            btn_update.Name = "btn_update";
+            btn_update.Padding = new Padding(0, 5, 0, 0);
+            btn_update.Size = new Size(75, 58);
+            btn_update.TabIndex = 10;
+            btn_update.Text = "UPDATE";
+            btn_update.TextImageRelation = TextImageRelation.ImageAboveText;
+            btn_update.UseVisualStyleBackColor = true;
+            // 
+            // label3
+            // 
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label3.AutoSize = true;
+            label3.Font = new Font("Consolas", 11.25F);
+            label3.Location = new Point(358, 46);
+            label3.Margin = new Padding(10, 10, 0, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(48, 18);
+            label3.TabIndex = 28;
+            label3.Text = "Type:";
+            // 
+            // cbo_type
+            // 
+            cbo_type.Font = new Font("Consolas", 11.25F);
+            cbo_type.FormattingEnabled = true;
+            cbo_type.Items.AddRange(new object[] { "FG", "Trolley " });
+            cbo_type.Location = new Point(415, 42);
+            cbo_type.Margin = new Padding(3, 10, 3, 3);
+            cbo_type.Name = "cbo_type";
+            cbo_type.Size = new Size(72, 26);
+            cbo_type.TabIndex = 6;
+            // 
+            // btn_import
+            // 
+            btn_import.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btn_import.Cursor = Cursors.Hand;
+            btn_import.Font = new Font("Consolas", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_import.IconChar = FontAwesome.Sharp.IconChar.ArrowDown;
+            btn_import.IconColor = Color.Black;
+            btn_import.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btn_import.IconSize = 24;
+            btn_import.Location = new Point(784, 9);
+            btn_import.Margin = new Padding(3, 10, 3, 3);
+            btn_import.Name = "btn_import";
+            btn_import.Padding = new Padding(0, 5, 0, 0);
+            btn_import.Size = new Size(75, 58);
+            btn_import.TabIndex = 11;
+            btn_import.Text = "IMPORT";
+            btn_import.TextImageRelation = TextImageRelation.ImageAboveText;
+            btn_import.UseVisualStyleBackColor = true;
+            // 
+            // linkLabel1
+            // 
+            linkLabel1.AutoSize = true;
+            linkLabel1.Font = new Font("Consolas", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            linkLabel1.Location = new Point(13, 76);
+            linkLabel1.Name = "linkLabel1";
+            linkLabel1.Size = new Size(0, 15);
+            linkLabel1.TabIndex = 31;
+            // 
+            // btn_export
+            // 
+            btn_export.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btn_export.Cursor = Cursors.Hand;
+            btn_export.Font = new Font("Consolas", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_export.IconChar = FontAwesome.Sharp.IconChar.ArrowUp;
+            btn_export.IconColor = Color.Black;
+            btn_export.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btn_export.IconSize = 24;
+            btn_export.Location = new Point(865, 9);
+            btn_export.Margin = new Padding(3, 10, 3, 3);
+            btn_export.Name = "btn_export";
+            btn_export.Padding = new Padding(0, 5, 0, 0);
+            btn_export.Size = new Size(75, 58);
+            btn_export.TabIndex = 12;
+            btn_export.Text = "EXPORT";
+            btn_export.TextImageRelation = TextImageRelation.ImageAboveText;
+            btn_export.UseVisualStyleBackColor = true;
+            // 
+            // label7
+            // 
+            label7.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label7.AutoSize = true;
+            label7.Font = new Font("Consolas", 11.25F);
+            label7.Location = new Point(10, 10);
+            label7.Margin = new Padding(10, 10, 0, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(40, 18);
+            label7.TabIndex = 33;
+            label7.Text = "Idx:";
+            // 
+            // tb_index
+            // 
+            tb_index.BorderStyle = BorderStyle.FixedSingle;
+            tb_index.Font = new Font("Consolas", 11.25F);
+            tb_index.Location = new Point(96, 8);
+            tb_index.Margin = new Padding(3, 10, 3, 3);
+            tb_index.Name = "tb_index";
+            tb_index.Size = new Size(53, 25);
+            tb_index.TabIndex = 1;
+            // 
+            // label8
+            // 
+            label8.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label8.AutoSize = true;
+            label8.Font = new Font("Consolas", 11.25F);
+            label8.Location = new Point(10, 80);
+            label8.Margin = new Padding(10, 10, 0, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(88, 18);
+            label8.TabIndex = 35;
+            label8.Text = "Route Out:";
+            // 
+            // tb_routeOut
+            // 
+            tb_routeOut.BorderStyle = BorderStyle.FixedSingle;
+            tb_routeOut.Font = new Font("Consolas", 11.25F);
+            tb_routeOut.Location = new Point(96, 76);
+            tb_routeOut.Margin = new Padding(3, 10, 3, 3);
+            tb_routeOut.Name = "tb_routeOut";
+            tb_routeOut.Size = new Size(53, 25);
+            tb_routeOut.TabIndex = 7;
             // 
             // V_Stocks
             // 
