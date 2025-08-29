@@ -1,27 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace APIService.Model
+﻿namespace APIService.Model
 {
-    class Response
+    class API_Response
     {
         public bool status { get; set; }
         public string message { get; set; }
         public object data { get; set; }
 
-        public Response(bool status, string message, object data)
+        public API_Response(bool status, string message, object data)
         {
             this.status = status;
             this.message = message;
             this.data = data;
         }
 
-        public static Response GenResponse(bool status = false, string message = "", object data = null)
+        public static API_Response GenResponse(bool status = false, string message = "", object data = null)
         {
-            return new Response(status, message, data);
+            return new API_Response(status, message, data);
         }
     }
 }

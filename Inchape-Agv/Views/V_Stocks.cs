@@ -1,19 +1,15 @@
-﻿using FontAwesome.Sharp;
-using DbServices.Models;
-using System.Data;
+﻿using DbServices.Models;
+using FontAwesome.Sharp;
 using Inchape_Agv.Utilities;
-using DbServices;
+using System.Data;
 using System.Diagnostics;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
-using Microsoft.AspNetCore.WebUtilities;
 
 namespace Inchape_Agv.Views
 {
-    public partial class V_Stocks : UserControl
+    public partial class V_Stocks : UserControl, ILoadData
     {
         private static DataTable dtStocks = new DataTable();
         private int selectedId;
-
         private Dictionary<string, string> headerMap = new Dictionary<string, string>
         {
             { "idx", "IDX" },
@@ -63,7 +59,7 @@ namespace Inchape_Agv.Views
             cbo_door.SelectedIndex = -1;
         }
 
-        private void LoadData()
+        public void LoadData()
         {
             DataTable dt = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
             dtStocks.Rows.Clear();
@@ -232,7 +228,6 @@ namespace Inchape_Agv.Views
                 {
                     ClearForm();
                     LoadData();
-                    //dtg_stocks.DataSource = DbServices.DbServices.Instance.DB_Stock.GetList().Tables["ds"];
                     dtg_stocks.Refresh();
                 }
             }

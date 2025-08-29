@@ -39,18 +39,24 @@ namespace Inchape_Agv
                 Process.GetCurrentProcess().Kill();
             }
 
-            //SysConfigModel cfg = SysConfig.Load();
-            //bool flag = CarServices.CarControl.Instance.InitialCommunication(
-            //    cfg.ComPort.ToString().ToUpper(), 
-            //    cfg.Baudrate);
+            SysConfigModel cfg = SysConfig.Load();
+            bool flag = CarServices.CarControl.Instance.InitialCommunication(
+                cfg.ComPort.ToString().ToUpper(),
+                cfg.Baudrate);
 
-            //if (!flag)
-            //    System.Windows.MessageBox.Show($"{cfg.ComPort} with {cfg.Baudrate} can't open!, please check the port", 
-            //        "Error", 
-            //        MessageBoxButton.OK, 
-            //        MessageBoxImage.Error);
+            if (!flag)
+            {
+                System.Windows.MessageBox.Show($"{cfg.ComPort} with {cfg.Baudrate} can't open!, please check the port",
+                    "Error",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+            }
+            else
+            {
+                CarServices.CarControl.Instance.InitialCarSystem(cfg.WirelessAddr, cfg.HomeMark);
+            }
 
-            //HttpAPI.Instance.StartAPI(8000);
+            HttpAPI.Instance.StartAPI(cfg.ServerPort);
             _navigate.OpenUserControl(new V_Home());
         }
 
@@ -79,8 +85,9 @@ namespace Inchape_Agv
                 if (btn.Tag is UserControl instance)
                 {
                     _navigate.OpenUserControl(instance);
+                    var method = instance.GetType().GetMethod("LoadData");
+                    method?.Invoke(instance, null);
                 }
-
             }
         }
     }

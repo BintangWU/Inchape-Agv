@@ -42,24 +42,46 @@ namespace DbServices.Fuctions
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"UPDATE {_db} SET ");
-            sqlString.Append("status= @Status ");
-            sqlString.Append("WHERE prodNo= @ProdNo ");
+            sqlString.Append("status= @Status, LH= @LHState, RH= @RHState ");
+            sqlString.Append("WHERE id= @Id AND prodNo= @ProdNo ");
 
             SQLiteParameter[] parameters = new SQLiteParameter[]
             {
+                new SQLiteParameter("@Id", model.Id),
                 new SQLiteParameter("@ProdNo", model.ProdNo),
-                new SQLiteParameter("@Status", model.Status)
+                new SQLiteParameter("@Status", model.Status),
+                new SQLiteParameter("@LHState", model.LH),
+                new SQLiteParameter("@RHState", model.RH)
             };
 
             int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);
             return rows > 0;
         }
 
-        public DataSet GetList()
+        public bool Delete(int id)
+        {
+            StringBuilder sqlString = new StringBuilder();
+            sqlString.Append($"DELETE FROM {_db} ");
+            sqlString.Append("WHERE id= @Id");
+
+            SQLiteParameter[] parameters = new SQLiteParameter[]
+            {
+                new SQLiteParameter("@Id", Convert.ToString(id))
+            };
+
+            int rows = DbHelper.ExecuteSql(sqlString.ToString(), parameters);
+            return rows > 0;
+        }
+
+        public DataSet GetList(string query = null)
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append("SELECT * ");
             sqlString.Append($"FROM {_db} ");
+
+            bool flag = query != null;
+            if (flag)
+                sqlString.Append(query);
             return DbHelper.DataQuery(sqlString.ToString());
         }
 
@@ -95,6 +117,8 @@ namespace DbServices.Fuctions
                 model.Routes = row["routes"] == DBNull.Value ? "" : row["routes"]?.ToString() ?? "";
                 model.Status = row["status"] == DBNull.Value ? "" : row["status"]?.ToString() ?? "";
                 model.CreateAt = row["createAt"] == DBNull.Value ? "" : row["createAt"]?.ToString() ?? "";  
+                model.LH = bool.TryParse(row["LH"].ToString(), out var lhState) ? lhState : false;
+                model.RH = bool.TryParse(row["RH"].ToString(), out var rhState) ? rhState : false;
             }
             return model;
         }

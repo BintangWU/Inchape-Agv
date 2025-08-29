@@ -1,7 +1,7 @@
 {
-  "ComPort": "COM4",
+  "ComPort": "COM2",
   "Baudrate": 9600,
-  "WirelessAddr": 3,
+  "WirelessAddr": 1,
   "ServerPort": 5000,
   "HomeMark": "11,12"
 }

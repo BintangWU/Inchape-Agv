@@ -16,6 +16,8 @@ namespace DbServices.Models
         private string? _routes;
         private string? _status;
         private string? _createAt;
+        private bool _lh;
+        private bool _rh;
         
 
         public int Id
@@ -58,6 +60,18 @@ namespace DbServices.Models
         {
             get { return _createAt; }
             set { _createAt = value; }
+        }
+
+        public bool LH
+        {
+            get { return _lh; }
+            set { _lh = value; }
+        }
+
+        public bool RH
+        {
+            get { return _rh; }
+            set { _rh = value; }
         }
     }
 }

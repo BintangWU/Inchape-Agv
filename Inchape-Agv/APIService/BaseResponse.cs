@@ -7,12 +7,12 @@ namespace Inchape_Agv.APIService
     {
         protected IActionResult OkResponse(string message = "", object data = null)
         {
-            return base.Ok(global::APIService.Model.Response.GenResponse(true, message, data));
+            return base.Ok(global::APIService.Model.API_Response.GenResponse(true, message, data));
         }
 
         protected IActionResult ErrResponse(string message = "error", object data = null)
         {
-            return base.BadRequest(global::APIService.Model.Response.GenResponse(false, message, data));
+            return base.BadRequest(global::APIService.Model.API_Response.GenResponse(false, message, data));
         }
     }
 }

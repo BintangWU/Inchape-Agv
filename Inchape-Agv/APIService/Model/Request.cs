@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace APIService.Model
 {
-    public class Request
+    public class CallModel
     {
         public int type { get; set; }
         public string prodNo { get; set; }    

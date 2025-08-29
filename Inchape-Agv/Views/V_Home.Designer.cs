@@ -31,7 +31,9 @@
             label1 = new Label();
             tb_prodNo = new TextBox();
             btn_send = new FontAwesome.Sharp.IconButton();
-            btn_test = new FontAwesome.Sharp.IconButton();
+            btn_car = new FontAwesome.Sharp.IconButton();
+            btn_outTest = new FontAwesome.Sharp.IconButton();
+            tb_outBound = new TextBox();
             SuspendLayout();
             // 
             // label1
@@ -70,25 +72,52 @@
             btn_send.Text = "SEND to WAREHOUSE";
             btn_send.UseVisualStyleBackColor = true;
             // 
-            // btn_test
+            // btn_car
             // 
-            btn_test.Cursor = Cursors.Hand;
-            btn_test.Font = new Font("Consolas", 35.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btn_test.IconChar = FontAwesome.Sharp.IconChar.None;
-            btn_test.IconColor = Color.Black;
-            btn_test.IconFont = FontAwesome.Sharp.IconFont.Auto;
-            btn_test.Location = new Point(10, 172);
-            btn_test.Name = "btn_test";
-            btn_test.Size = new Size(153, 61);
-            btn_test.TabIndex = 4;
-            btn_test.Text = "TEST";
-            btn_test.UseVisualStyleBackColor = true;
+            btn_car.Cursor = Cursors.Hand;
+            btn_car.Font = new Font("Consolas", 35.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_car.IconChar = FontAwesome.Sharp.IconChar.None;
+            btn_car.IconColor = Color.Black;
+            btn_car.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btn_car.Location = new Point(10, 209);
+            btn_car.Name = "btn_car";
+            btn_car.Size = new Size(275, 61);
+            btn_car.TabIndex = 4;
+            btn_car.Text = "Car at Home";
+            btn_car.UseVisualStyleBackColor = true;
+            // 
+            // btn_outTest
+            // 
+            btn_outTest.Cursor = Cursors.Hand;
+            btn_outTest.Font = new Font("Consolas", 35.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btn_outTest.IconChar = FontAwesome.Sharp.IconChar.None;
+            btn_outTest.IconColor = Color.Black;
+            btn_outTest.IconFont = FontAwesome.Sharp.IconFont.Auto;
+            btn_outTest.Location = new Point(10, 287);
+            btn_outTest.Name = "btn_outTest";
+            btn_outTest.Size = new Size(275, 61);
+            btn_outTest.TabIndex = 5;
+            btn_outTest.Text = "OUTBOUND";
+            btn_outTest.UseVisualStyleBackColor = true;
+            // 
+            // tb_outBound
+            // 
+            tb_outBound.BorderStyle = BorderStyle.None;
+            tb_outBound.Font = new Font("Consolas", 35.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            tb_outBound.Location = new Point(291, 292);
+            tb_outBound.Name = "tb_outBound";
+            tb_outBound.PlaceholderText = "612055555";
+            tb_outBound.Size = new Size(382, 56);
+            tb_outBound.TabIndex = 6;
+            tb_outBound.TextAlign = HorizontalAlignment.Center;
             // 
             // V_Home
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(btn_test);
+            Controls.Add(tb_outBound);
+            Controls.Add(btn_outTest);
+            Controls.Add(btn_car);
             Controls.Add(btn_send);
             Controls.Add(tb_prodNo);
             Controls.Add(label1);
@@ -104,6 +133,8 @@
         private Label label1;
         private TextBox tb_prodNo;
         private FontAwesome.Sharp.IconButton btn_send;
-        private FontAwesome.Sharp.IconButton btn_test;
+        private FontAwesome.Sharp.IconButton btn_car;
+        private FontAwesome.Sharp.IconButton btn_outTest;
+        private TextBox tb_outBound;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DbServices.Models;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.Primitives;
 using System.Data;
 using System.Data.SQLite;
@@ -71,13 +72,21 @@ namespace DbServices.Fuctions
             return rows > 0;
         }
 
-        public bool Update(string stockName, string prodNo)
+        public bool Update(string stockName, string prodNo, bool clear = false)
         {
             StringBuilder sqlString = new StringBuilder();
             sqlString.Append($"UPDATE {_db} SET ");
-            sqlString.Append("prodNo= @ProdNo ");
-            sqlString.Append("WHERE name= @Name " +
-                "AND (prodNo IS NULL OR prodNo='-' OR prodNo='')");
+            if (!clear)
+                sqlString.Append("prodNo= @ProdNo ");
+            else
+                sqlString.Append("prodNo= '' ");
+            
+            sqlString.Append("WHERE name= @Name ");
+
+            if (!clear)
+                sqlString.Append("AND (prodNo IS NULL OR prodNo='-' OR prodNo='')");
+            else
+                sqlString.Append("AND prodNo IS NOT NULL  AND prodNo= @ProdNo");
 
             SQLiteParameter[] parameters = 
             [

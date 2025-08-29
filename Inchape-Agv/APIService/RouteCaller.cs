@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-using APIService.Model;
+﻿using APIService.Model;
+using DbServices.Models;
 using Inchape_Agv.APIService;
-using System.Windows.Markup.Localizer;
-using System.Diagnostics;
-using System.Security.Permissions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Data;
 
 namespace APIService
@@ -15,58 +12,112 @@ namespace APIService
     [Tags("Caller")]
     public class RouteCaller : BaseResponse
     {
+        private static readonly SemaphoreSlim _lock = new SemaphoreSlim(1,1);
+        //private static readonly ConcurrentDictionary<string, SemaphoreSlim> _lock = new ConcurrentDictionary<string, SemaphoreSlim>();
+
         [HttpGet("/status")]
-        public IActionResult GetStatusCar()
+        public async Task<IActionResult> GetStatusCar()
         {
-            var imNow = new
+            await _lock.WaitAsync();
+            try
+            {
+
+            }
+            //catch { }
+            finally
+            {
+                _lock.Release();
+            }
+
+            return Ok(new API_Response(true, "Success", new
             {
                 status = "online",
                 timstamp = DateTime.UtcNow
-            };
-            return OkResponse("sucess", imNow);
+            }));
         }
 
         [HttpGet("/statusStock")]
-        public IActionResult GetStockData()
+        public async Task<IActionResult> GetStockData()
         {
-            return Ok("Under Mintenance");
+            await _lock.WaitAsync();
+            try
+            {
+                return Ok("Under Mintenance");
+            }
+            //catch { }
+            finally
+            {
+                _lock.Release();
+            }
         }
 
         [HttpPost("/callCar")]
-        public IActionResult CallCar([FromBody] Request data) 
+        public async Task<IActionResult> CallCar([FromBody] CallModel data) 
         {
-            int type = data.type;
+            await _lock.WaitAsync();
+            string code = "";
+            string destination = "";
             string message = "";
+            bool status = false;
+            int[] routes;
 
-            switch (type)
+            DataTable dt = null;
+            DBM_TaskOrder taskOrder = null;
+            DBM_TaskOrder model = null;
+
+            try
             {
-                case 0:
-                    try
-                    {
-                        DataTable dt = DbServices.DbServices.Instance.DB_InOutbound.InboudStock(data.prodNo.ToString());
-                        bool flag = dt != null && dt.Rows.Count == 2;
-                        if (flag)
+                switch (data.type)
+                {
+                    case 0: //Inbound Calling
                         {
-                            message = "success";
-                            Debug.WriteLine("Inbound Stock Success");
+                            code = data.prodNo.ToString();
+                            dt = DbServices.DbServices.Instance.DB_InOutbound.InboudStock(code);
+                            destination = dt.Rows[0]["name"].ToString();
+
+                            bool flag = dt != null && dt.Rows.Count == 2;
+                            if (flag)
+                            {
+                                message = $"Success, Inbound Stock [{code}, {destination}]";
+                                status = true;
+                            }
+                            break;
                         }
-                    }
-                    catch (Exception ex )
-                    {
-                        message = ex.Message;
-                    }
-                    break;
 
-                case 1:
-                    Debug.WriteLine("Calling Outbound");
-                    break;
+                    case 1: //Outbound Calling
+                        {
+                            code = data.prodNo.ToString();
+                            dt = DbServices.DbServices.Instance.DB_InOutbound.Outbound(code);
+                            destination = dt.Rows[0]["name"].ToString();
 
-                default: break;
+                            bool flag = dt != null && dt.Rows.Count == 2;
+                            if (flag)
+                            {
+                                message = $"Success, Outbound Stock [{code}]";
+                                status = true;
+                            }
+                            break;
+                        }
+
+                    default: break;
+                }
+            }
+            catch (Exception ex)
+            {
+                message = ex.Message;
+                status = false;
+            }
+            finally
+            {
+                _lock.Release();
             }
 
-            return OkResponse(message, new { type = type, prodNo = data.prodNo });
+            return Ok(new API_Response(status, message, new
+            {
+                call = data?.type ?? 0,
+                stock = destination.ToString(),
+                prodNo = data?.prodNo?.ToString() ?? ""
+            }));
         }
-
-        
     }
 }

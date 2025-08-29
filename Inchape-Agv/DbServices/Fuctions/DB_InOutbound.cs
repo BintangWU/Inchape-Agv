@@ -100,7 +100,7 @@ namespace DbServices.Fuctions
                 for (int i = 0; i < data.Rows.Count; i++)
                 {
                     stockListname[i] = data.Rows[i]["name"].ToString();
-                    route[i] = int.TryParse(data.Rows[i]["route"].ToString(), out var routeId) ? routeId : 0;
+                    route[i] = int.TryParse(data.Rows[i]["routeOut"].ToString(), out var routeId) ? routeId : 0;
                 }
 
                 if (stockListname[0].ToUpper() == stockListname[1].ToUpper())
@@ -116,7 +116,7 @@ namespace DbServices.Fuctions
                         CreateAt = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                     };
 
-                    bool flag = DbServices.Instance.DB_Stock.Update(stockName, prodNo);
+                    bool flag = DbServices.Instance.DB_Stock.Update(stockName, prodNo, true);
                     if (flag)
                     {
                         bool flag1 = DbServices.Instance.DB_TaskOrder.Add(taskOrder) > 0;
@@ -145,7 +145,7 @@ namespace DbServices.Fuctions
             else
             {
                 result = null;
-                throw new Exception("Data Stock is Null or Invalid");
+                throw new Exception($"[{prodNo}] not found, please check your production code!");
             }
             return result;
         }
